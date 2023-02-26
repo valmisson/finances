@@ -6,6 +6,12 @@ export default defineNuxtConfig({
       fauth: process.env.FAUTH
     }
   },
+  css: ['~/assets/styles/main.css'],
+  postcss: {
+    plugins: {
+      tailwindcss: {}
+    }
+  },
   vite: {
     logLevel: 'warn'
   }

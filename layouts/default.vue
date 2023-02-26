@@ -1,10 +1,10 @@
 <template>
-  <div style="display: contents;">
+  <div class="min-h-screen bg-zinc-100">
     <slot />
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 const config = useAppConfig()
 
 useHead({
