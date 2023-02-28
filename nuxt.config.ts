@@ -6,6 +6,9 @@ export default defineNuxtConfig({
       fauth: process.env.FAUTH
     }
   },
+  modules: [
+    'nuxt-icon'
+  ],
   css: ['~/assets/styles/main.css'],
   postcss: {
     plugins: {
