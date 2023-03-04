@@ -17,5 +17,8 @@ module.exports = {
     sourceType: 'module'
   },
   ignorePatterns: ['*.cjs'],
-  rules: {}
+  rules: {
+    "vue/multi-word-component-names": "off",
+    "vue/no-multiple-template-root": "off"
+  }
 }

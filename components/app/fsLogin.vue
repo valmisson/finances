@@ -4,7 +4,7 @@
       Login
     </h2>
 
-    <base-fs-input
+    <base-text-field
       v-model="email"
       type="email"
       placeholder="E-mail"
@@ -12,7 +12,7 @@
       required
     />
 
-    <base-fs-input
+    <base-text-field
       v-model="password"
       type="password"
       placeholder="Password"
@@ -20,28 +20,28 @@
       required
     />
 
-    <base-fs-errors :errors="errors" />
+    <base-error-message :errors="errors" />
 
     <div class="actions">
       <a href="#" class="forgot-password">
         Esqueceu a senha ?
       </a>
 
-      <base-fs-button>
+      <base-button>
         Entrar
-      </base-fs-button>
+      </base-button>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
-import { BaseFsButton, BaseFsErrors, BaseFsInput } from '#components'
+import { BaseButton, BaseErrorMessage, BaseTextField } from '#components'
 
 const auth = useAuth()
 
-const email = ref<string>()
-const password = ref<string>()
-const errors = ref<string>()
+const email = ref<string>('')
+const password = ref<string>('')
+const errors = ref<string>('')
 
 async function submitLogin (): Promise<void> {
   try {
@@ -62,7 +62,7 @@ async function submitLogin (): Promise<void> {
 
 <style scoped>
   .form {
-    @apply bg-white px-4 md:px-6 py-4 rounded w-full md:w-96;
+    @apply bg-white px-4 md:px-6 py-4 rounded lg:w-96;
   }
 
   .title {

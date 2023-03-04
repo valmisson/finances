@@ -16,12 +16,16 @@ const appConfig = useAppConfig()
 useHead({
   title: 'Login'
 })
+
+definePageMeta({
+  layout: 'basic'
+})
 </script>
 
 <style scoped>
   .login {
-    @apply grid justify-center items-center
-      px-2 pt-24 md:pt-40;
+    @apply sm:grid sm:justify-center sm:items-center
+      px-6 sm:px-2 pt-24 md:pt-40;
   }
 
   .title {
