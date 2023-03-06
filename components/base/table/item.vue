@@ -49,7 +49,7 @@ defineProps({
   }
 
   .table-item-icon {
-    @apply mr-2.5 block;
+    @apply mr-1.5 lg:mr-2.5 block;
   }
 
   .ellipsis {

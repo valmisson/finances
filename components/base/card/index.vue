@@ -6,6 +6,6 @@
 
 <style scoped>
 .card {
-  @apply bg-white rounded px-4 py-3 my-5 h-fit;
+  @apply bg-white rounded px-4 py-3 my-6 lg:my-4 h-fit;
 }
 </style>

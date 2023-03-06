@@ -2,7 +2,7 @@
   <aside class="sidebar" :class="{ 'open': sidebarVisible }">
     <app-fs-sidebar-brand class="sidebar-brand" />
 
-    <app-fs-sidebar-menu />
+    <app-fs-sidebar-menu @changed:page="hideSidebar" />
 
     <app-fs-sidebar-logout />
   </aside>
@@ -39,13 +39,17 @@ const sidebarVisible = ref(false)
 function toggleSidebar () {
   sidebarVisible.value = !sidebarVisible.value
 }
+
+function hideSidebar () {
+  sidebarVisible.value = false
+}
 </script>
 
 <style scoped>
   .sidebar {
     @apply bg-white text-gray-700 w-60 h-screen px-5
       fixed top-0 lg:sticky box-content max-lg:z-40
-      -translate-x-full lg:transform-none
+      max-lg:-translate-x-full
       transition-transform duration-300;
   }
 

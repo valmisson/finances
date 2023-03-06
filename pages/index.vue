@@ -64,7 +64,7 @@
     </base-table>
 
     <base-card-actions>
-      <NuxtLink to="#" class="see-all">
+      <NuxtLink :to="getPageLink('transactions')" class="see-all">
         ver todos
       </NuxtLink>
     </base-card-actions>
@@ -101,7 +101,7 @@
       </base-table-empty>
 
       <base-card-actions v-if="expenses.length">
-        <NuxtLink to="#" class="see-all">
+        <NuxtLink :to="getPageLink('expenses')" class="see-all">
           ver todos
         </NuxtLink>
       </base-card-actions>
@@ -137,7 +137,7 @@
       </base-table-empty>
 
       <base-card-actions v-if="investments.length">
-        <NuxtLink to="#" class="see-all">
+        <NuxtLink :to="getPageLink('investments')" class="see-all">
           ver todos
         </NuxtLink>
       </base-card-actions>
@@ -156,6 +156,8 @@ import {
   BaseTableItem,
   BaseTableEmpty
 } from '#components'
+
+import pageMap from '~/utils/pageMap'
 
 import { Transaction } from '~/types/transaction.interface'
 import { Expense } from '~/types/expense.interface'
@@ -177,6 +179,10 @@ const balanceFormat = computed(() => {
 const balanceHideIcon = computed(() => {
   return balanceDisplay.value ? 'ic:baseline-remove-red-eye' : 'ic:round-visibility-off'
 })
+
+function getPageLink (name: string) {
+  return pageMap.find(page => page.name === name)?.href
+}
 
 function toggleBalanceDisplay () {
   balanceDisplay.value = !balanceDisplay.value
@@ -229,7 +235,7 @@ onMounted(() => {
     { name: 'INTR, GOGL34', date: '02/03/2023' }
   ]
 
-  expenses.value.length = 0
+  // expenses.value.length = 0
 })
 </script>
 
@@ -245,7 +251,7 @@ onMounted(() => {
   /* Balance */
 
   .balance {
-    @apply w-60;
+    @apply w-60 lg:mt-8;
   }
 
   .balance-box {
@@ -271,7 +277,7 @@ onMounted(() => {
   /* Transactions */
 
   .transactions {
-    @apply min-w-full mt-10;
+    @apply min-w-full lg:mt-8;
   }
 
   .transactions .table-item {

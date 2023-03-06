@@ -3,8 +3,9 @@
     <ul class="menu-items">
       <li
         v-for="menu in menuList"
-        :key="menu.order"
+        :key="menu.name"
         class="menu-item"
+        @click="$emit('changed:page')"
       >
         <NuxtLink :to="menu.href" class="menu-link">
           <Icon
@@ -28,6 +29,8 @@ import pageMap from '~/utils/pageMap'
 const menuList = computed(() => {
   return pageMap.sort((a, b) => a.order - b.order)
 })
+
+defineEmits(['changed:page'])
 </script>
 
 <style scoped>
