@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   ssr: true,
   runtimeConfig: {
     public: {
+      isDev: process.env.NODE_ENV === 'development',
       fauth: process.env.FAUTH
     }
   },
