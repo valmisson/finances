@@ -1,4 +1,4 @@
-import { PageMap } from '~/types/pageMap.interface'
+import { PageMap } from '~/types/interface/pageMap'
 
 export default [
   {

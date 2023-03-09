@@ -57,7 +57,7 @@ import {
   BaseSubtitle
 } from '#components'
 
-import { Expense } from '~/types/expense.interface'
+import { Expense } from '~/types/interface/expense'
 
 const expenses = ref<Expense[]>([])
 

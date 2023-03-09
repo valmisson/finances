@@ -159,9 +159,9 @@ import {
 
 import pageMap from '~/utils/pageMap'
 
-import { Transaction } from '~/types/transaction.interface'
-import { Expense } from '~/types/expense.interface'
-import { Investment } from '~/types/investment.interface'
+import { Transaction } from '~/types/interface/transaction'
+import { Expense } from '~/types/interface/expense'
+import { Investment } from '~/types/interface/investment'
 
 const balanceValue = ref<number>(5101)
 const balanceDisplay = ref<boolean>(false)
