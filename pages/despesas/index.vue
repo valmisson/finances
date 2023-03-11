@@ -7,96 +7,62 @@
     NOVA DESPESA
   </base-button>
 
-  <base-card class="expenses">
-    <base-table>
-      <base-table-items
-        v-for="expense in expenses"
-        :key="expense.name"
-        cols="grid-cols-2 md:grid-cols-4"
-      >
-        <base-table-item
-          :title="expense.name"
-          :value="expense.name"
-          ellipsis
-        />
+  <base-table
+    :headers="headers"
+    :items="expenses"
+    class="expenses"
+  >
+    <template #actions="{ itemId }">
+      <NuxtLink :to="`${getPageLink('expenses')}/edit/${itemId}`">
+        EDITAR
+      </NuxtLink>
 
-        <base-table-item
-          icon="mdi:calendar-month"
-          icon-size="text-2xl md:text-lg"
-          :value="expense.date"
-        />
-
-        <base-table-item
-          icon="mdi:cash"
-          icon-size="text-2xl"
-          :value="expense.value"
-        />
-
-        <base-table-actions class="table-actions">
-          <button class="table-actions-btn btn-edit">
-            editar
-          </button>
-
-          <button class="table-actions-btn btn-remove">
-            remover
-          </button>
-        </base-table-actions>
-      </base-table-items>
-    </base-table>
-  </base-card>
+      <button class="expenses-remove">
+        REMOVE
+      </button>
+    </template>
+  </base-table>
 </template>
 
 <script setup lang="ts">
 import {
+  BaseSubtitle,
   BaseButton,
-  BaseCard,
-  BaseTable,
-  BaseTableItems,
-  BaseTableItem,
-  BaseTableActions,
-  BaseSubtitle
+  BaseTable
 } from '#components'
 
+import { getPageLink } from '~/utils/pageMap'
+
 import { Expense } from '~/types/interface/expense'
+import { TableHeader } from '~/types/components/tables'
 
 const expenses = ref<Expense[]>([])
+const headers = ref<TableHeader[]>([
+  { text: 'Nome', value: 'name' },
+  { text: 'Data', value: 'date', sortable: true },
+  { text: 'Valor', value: 'value' }
+])
 
 onMounted(() => {
   expenses.value = [
-    { name: 'DAS MEI', date: '20/01/2023', value: 'R$ 71,00' },
-    { name: 'Fatura Cartão', date: '05/02/2023', value: 'R$ 500,00' },
-    { name: 'Internet', date: '10/02/2023', value: 'R$ 79,00' },
-    { name: 'Comprar Peugeot 208 Allure 17/18', date: '15/03/2023', value: 'R$ 35.000,00' }
+    { id: 'e48c', name: 'DAS MEI', date: '20/01/2023', value: 'R$ 71,00' },
+    { id: '259a', name: 'Fatura Cartão', value: 'R$ 500,00', date: '05/02/2023' },
+    { id: 'd3f3', name: 'Internet', date: '10/02/2023', value: 'R$ 79,00' },
+    { id: 'c0c4', name: 'Comprar Peugeot 208 Allure 17/18', date: '15/03/2023', value: 'R$ 35.000,00' }
   ]
 })
 </script>
 
 <style scoped>
   .expenses-new {
-    @apply mt-6 lg:mt-8;
+    @apply mt-6 mb-2 lg:mt-8 lg:mb-4;
   }
 
   .expenses {
-    @apply mt-8;
+    @apply mt-6 lg:mt-4;
   }
 
-  .table-items {
-    @apply last:border-none last:pb-1;
-  }
-
-  .expenses .table-item {
-    @apply max-md:[&:nth-child(3)]:mt-2 max-md:last:mt-2;
-  }
-
-  .table-actions {
-    @apply max-lg:mt-3;
-  }
-
-  .table-actions-btn {
-    @apply text-xs font-medium uppercase last:ml-4;
-  }
-
-  .btn-remove {
+  .expenses-remove {
     @apply text-red-500;
   }
 </style>

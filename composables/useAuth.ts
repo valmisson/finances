@@ -42,7 +42,7 @@ export default function () {
     },
 
     _setToken (token: string): void {
-      const localToken = useCookie<string>('localToken', { expires: getExpiresDate(2), secure: true })
+      const localToken = useCookie<string>('localToken', { expires: getExpiresDate(5), secure: true })
 
       localToken.value = token
     },

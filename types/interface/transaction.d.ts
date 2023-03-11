@@ -4,6 +4,7 @@ export interface TransactionType {
 }
 
 export interface Transaction {
+  id: string;
   name: string;
   date: string;
   value: string;

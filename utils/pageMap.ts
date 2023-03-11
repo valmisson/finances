@@ -1,6 +1,6 @@
 import { PageMap } from '~/types/interface/pageMap'
 
-export default [
+export const pageMap = [
   {
     order: 1,
     name: 'home',
@@ -30,3 +30,7 @@ export default [
     icon: 'mdi:compare-horizontal'
   }
 ] as PageMap[]
+
+export function getPageLink (name: string) {
+  return pageMap.find(page => page.name === name)?.href
+}

@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import pageMap from '~/utils/pageMap'
+import { pageMap } from '~/utils/pageMap'
 
 const menuList = computed(() => {
   return pageMap.sort((a, b) => a.order - b.order)

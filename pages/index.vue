@@ -28,42 +28,29 @@
       Transações Recentes
     </base-card-title>
 
-    <base-table>
-      <base-table-items
-        v-for="transaction in transactions"
-        :key="transaction.name"
-        cols="grid-cols-2 md:grid-cols-4"
-      >
-        <NuxtLink to="#" class="transactions-link">
-          <base-table-item
-            :value="transaction.name"
-            :title="transaction.name"
-            class="transactions-name"
-            ellipsis
-          />
-        </NuxtLink>
+    <base-table
+      v-if="transactions.length"
+      :headers="transactionsHeaders"
+      :items="transactions"
+    >
+      <template #value="{ value, item }">
+        <div
+          :class="item.type.value.withdrawal ? 'text-red-500': 'text-green-500'"
+        >
+          {{ value }}
+        </div>
+      </template>
 
-        <base-table-item
-          icon="mdi:calendar-month"
-          icon-size="text-lg"
-          :value="transaction.date"
-        />
-
-        <base-table-item
-          icon="mdi:cash"
-          icon-size="text-2xl"
-          :text-color="transaction.type.withdrawal ? 'text-red-500': 'text-green-500'"
-          :value="transaction.value"
-        />
-
-        <base-table-item
-          icon="mdi:compare-horizontal"
-          :value="transaction.type.name"
-        />
-      </base-table-items>
+      <template #type="{ value }">
+        {{ value.name }}
+      </template>
     </base-table>
 
-    <base-card-actions>
+    <base-table-empty v-else>
+      Nenhuma transação cadastrada
+    </base-table-empty>
+
+    <base-card-actions v-if="transactions.length">
       <NuxtLink :to="getPageLink('transactions')" class="see-all">
         ver todos
       </NuxtLink>
@@ -76,25 +63,11 @@
         Próximas Despesas
       </base-card-title>
 
-      <base-table v-if="expenses.length">
-        <base-table-items
-          v-for="expense in expenses"
-          :key="expense.name"
-          cols="grid-cols-2"
-        >
-          <base-table-item
-            :title="expense.name"
-            :value="expense.name"
-            ellipsis
-          />
-
-          <base-table-item
-            icon="mdi:calendar-month"
-            icon-size="text-lg"
-            :value="expense.date"
-          />
-        </base-table-items>
-      </base-table>
+      <base-table
+        v-if="expenses.length"
+        :headers="simplesHeaders"
+        :items="expenses"
+      />
 
       <base-table-empty v-else>
         Nenhuma despesas cadastradas
@@ -112,25 +85,11 @@
         Próximos Investimentos
       </base-card-title>
 
-      <base-table v-if="investments.length">
-        <base-table-items
-          v-for="investment in investments"
-          :key="investment.name"
-          cols="grid-cols-2"
-        >
-          <base-table-item
-            :title="investment.name"
-            :value="investment.name"
-            ellipsis
-          />
-
-          <base-table-item
-            icon="mdi:calendar-month"
-            icon-size="text-lg"
-            :value="investment.date"
-          />
-        </base-table-items>
-      </base-table>
+      <base-table
+        v-if="investments.length"
+        :headers="simplesHeaders"
+        :items="investments"
+      />
 
       <base-table-empty v-else>
         Nenhum investimento cadastrado
@@ -152,22 +111,34 @@ import {
   BaseCardText,
   BaseSubtitle,
   BaseTable,
-  BaseTableItems,
-  BaseTableItem,
   BaseTableEmpty
 } from '#components'
 
-import pageMap from '~/utils/pageMap'
+import { getPageLink } from '~/utils/pageMap'
 
 import { Transaction } from '~/types/interface/transaction'
 import { Expense } from '~/types/interface/expense'
 import { Investment } from '~/types/interface/investment'
+import { TableHeader } from '~~/types/components/tables'
 
 const balanceValue = ref<number>(5101)
 const balanceDisplay = ref<boolean>(false)
+
 const transactions = ref<Transaction[]>([])
 const expenses = ref<Expense[]>([])
 const investments = ref<Investment[]>([])
+
+const transactionsHeaders = ref<TableHeader[]>([
+  { text: 'Nome', value: 'name' },
+  { text: 'Data', value: 'date' },
+  { text: 'Valor', value: 'value' },
+  { text: 'Tipo', value: 'type' }
+])
+
+const simplesHeaders = ref<TableHeader[]>([
+  { text: 'Nome', value: 'name' },
+  { text: 'Data', value: 'date' }
+])
 
 const balanceFormat = computed(() => {
   return Intl.NumberFormat(
@@ -180,10 +151,6 @@ const balanceHideIcon = computed(() => {
   return balanceDisplay.value ? 'ic:baseline-remove-red-eye' : 'ic:round-visibility-off'
 })
 
-function getPageLink (name: string) {
-  return pageMap.find(page => page.name === name)?.href
-}
-
 function toggleBalanceDisplay () {
   balanceDisplay.value = !balanceDisplay.value
 
@@ -195,6 +162,7 @@ onMounted(() => {
 
   transactions.value = [
     {
+      id: 'er3r',
       name: 'Serviço Fix Bugs',
       date: '27/01/2023',
       value: '+R$ 1.200,00',
@@ -204,6 +172,7 @@ onMounted(() => {
       }
     },
     {
+      id: 'a3cd',
       name: 'Pagt. Faculdade Engenharia de Software',
       date: '10/01/2023',
       value: '-R$ 99,00',
@@ -213,6 +182,7 @@ onMounted(() => {
       }
     },
     {
+      id: 'r4c1',
       name: 'Invest. CDB POS DI',
       date: '02/01/2023',
       value: '+R$ 4.000,00',
@@ -224,15 +194,15 @@ onMounted(() => {
   ]
 
   expenses.value = [
-    { name: 'DAS MEI', date: '20/01/2023' },
-    { name: 'Fatura Cartão', date: '05/02/2023' },
-    { name: 'Internet', date: '10/02/2023' }
+    { id: 'ab3c', name: 'DAS MEI', date: '20/01/2023' },
+    { id: 'vav2', name: 'Fatura Cartão', date: '05/02/2023' },
+    { id: 'jer1', name: 'Internet', date: '10/02/2023' }
   ]
 
   investments.value = [
-    { name: 'CBD DI Liquidez', date: '02/02/2023' },
-    { name: 'Tesouro Direto', date: '02/02/2023' },
-    { name: 'INTR, GOGL34', date: '02/03/2023' }
+    { id: '8saf', name: 'CBD DI Liquidez', date: '02/02/2023' },
+    { id: 'ave4', name: 'Tesouro Direto', date: '02/02/2023' },
+    { id: 'gh1a', name: 'INTR, GOGL34', date: '02/03/2023' }
   ]
 
   // expenses.value.length = 0
