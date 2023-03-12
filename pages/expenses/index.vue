@@ -3,7 +3,10 @@
     Despesas
   </base-subtitle>
 
-  <base-button class="expenses-new">
+  <base-button
+    class="expenses-new"
+    @click="gotNew"
+  >
     NOVA DESPESA
   </base-button>
 
@@ -42,6 +45,10 @@ const headers = ref<TableHeader[]>([
   { text: 'Data', value: 'date', sortable: true },
   { text: 'Valor', value: 'value' }
 ])
+
+function gotNew (): void {
+  navigateTo(`${getPageLink('expenses')}/new`)
+}
 
 onMounted(() => {
   expenses.value = [

@@ -12,21 +12,21 @@ export const pageMap = [
     order: 2,
     name: 'expenses',
     title: 'despesas',
-    href: '/despesas',
+    href: '/expenses',
     icon: 'mdi:currency-usd-off'
   },
   {
     order: 3,
     name: 'investments',
     title: 'investimentos',
-    href: '/investimentos',
+    href: '/investments',
     icon: 'mdi:currency-usd'
   },
   {
     order: 4,
     name: 'transactions',
     title: 'transações',
-    href: '/transacoes',
+    href: '/transactions',
     icon: 'mdi:compare-horizontal'
   }
 ] as PageMap[]

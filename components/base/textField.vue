@@ -1,5 +1,5 @@
 <template>
-  <label class="fs-input">
+  <div class="fs-input">
     <Icon
       v-if="icon"
       :name="icon"
@@ -14,7 +14,7 @@
       :class="{ '!pl-9': icon }"
       @input="$emit('update:modelValue', $event.target.value)"
     >
-  </label>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -57,7 +57,7 @@ defineProps({
 }
 
 input {
-  @apply border border-gray-200 rounded px-4 py-2 mt-6 w-full
-    focus:outline-0 focus:border-gray-400 block;
+  @apply  w-full border border-gray-200 rounded px-4 py-2
+    mt-1.5 lg:mt-3 focus:outline-0 focus:border-gray-400 block;
 }
 </style>

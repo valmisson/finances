@@ -65,6 +65,10 @@ async function submitLogin (): Promise<void> {
     @apply bg-white px-4 md:px-6 py-4 rounded lg:w-96;
   }
 
+  .fs-input {
+    @apply mt-6;
+  }
+
   .title {
     @apply text-lg text-gray-600;
   }
