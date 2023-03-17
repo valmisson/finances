@@ -9,8 +9,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   const app = initializeApp(fauth)
 
   const auth = getAuth(app)
-  const database = getFirestore(app)
+  const firestore = getFirestore(app)
 
   nuxtApp.provide('auth', auth)
-  nuxtApp.provide('database', database)
+  nuxtApp.provide('firestore', firestore)
 })

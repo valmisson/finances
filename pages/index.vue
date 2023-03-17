@@ -29,9 +29,9 @@
     </base-card-title>
 
     <base-table
-      v-if="transactions.length"
       :headers="transactionsHeaders"
       :items="transactions"
+      no-items="Nenhuma transação cadastrada"
     >
       <template #value="{ value, item }">
         <div
@@ -45,10 +45,6 @@
         {{ value.name }}
       </template>
     </base-table>
-
-    <base-table-empty v-else>
-      Nenhuma transação cadastrada
-    </base-table-empty>
 
     <base-card-actions v-if="transactions.length">
       <NuxtLink :to="getPageLink('transactions')" class="see-all">
@@ -64,14 +60,10 @@
       </base-card-title>
 
       <base-table
-        v-if="expenses.length"
         :headers="simplesHeaders"
         :items="expenses"
+        no-items="Nenhuma despesas cadastradas"
       />
-
-      <base-table-empty v-else>
-        Nenhuma despesas cadastradas
-      </base-table-empty>
 
       <base-card-actions v-if="expenses.length">
         <NuxtLink :to="getPageLink('expenses')" class="see-all">
@@ -86,14 +78,10 @@
       </base-card-title>
 
       <base-table
-        v-if="investments.length"
         :headers="simplesHeaders"
         :items="investments"
+        no-items="Nenhum investimento cadastrado"
       />
-
-      <base-table-empty v-else>
-        Nenhum investimento cadastrado
-      </base-table-empty>
 
       <base-card-actions v-if="investments.length">
         <NuxtLink :to="getPageLink('investments')" class="see-all">
@@ -110,8 +98,7 @@ import {
   BaseCardTitle,
   BaseCardText,
   BaseSubtitle,
-  BaseTable,
-  BaseTableEmpty
+  BaseTable
 } from '#components'
 
 import { getPageLink } from '~/utils/pageMap'
@@ -120,6 +107,8 @@ import { Transaction } from '~/types/interface/transaction'
 import { Expense } from '~/types/interface/expense'
 import { Investment } from '~/types/interface/investment'
 import { TableHeader } from '~~/types/components/tables'
+
+const db = useDatabase()
 
 const balanceValue = ref<number>(5101)
 const balanceDisplay = ref<boolean>(false)
@@ -157,8 +146,20 @@ function toggleBalanceDisplay () {
   useCookie<boolean>('balance_display').value = balanceDisplay.value
 }
 
-onMounted(() => {
+async function getExpenses () {
+  const result = await db.get('expenses', 3)
+
+  expenses.value = result.data.map((item) => {
+    item.date = toDateFormated(item.date)
+
+    return item
+  }) as Expense[]
+}
+
+onMounted(async () => {
   balanceDisplay.value = useCookie<boolean>('balance_display').value ?? false
+
+  await getExpenses()
 
   transactions.value = [
     {
@@ -170,42 +171,12 @@ onMounted(() => {
         name: 'Deposito',
         withdrawal: false
       }
-    },
-    {
-      id: 'a3cd',
-      name: 'Pagt. Faculdade Engenharia de Software',
-      date: '10/01/2023',
-      value: '-R$ 99,00',
-      type: {
-        name: 'Saque',
-        withdrawal: true
-      }
-    },
-    {
-      id: 'r4c1',
-      name: 'Invest. CDB POS DI',
-      date: '02/01/2023',
-      value: '+R$ 4.000,00',
-      type: {
-        name: 'Investimento',
-        withdrawal: false
-      }
     }
   ]
 
-  expenses.value = [
-    { id: 'ab3c', name: 'DAS MEI', date: '20/01/2023' },
-    { id: 'vav2', name: 'Fatura Cartão', date: '05/02/2023' },
-    { id: 'jer1', name: 'Internet', date: '10/02/2023' }
-  ]
-
   investments.value = [
-    { id: '8saf', name: 'CBD DI Liquidez', date: '02/02/2023' },
-    { id: 'ave4', name: 'Tesouro Direto', date: '02/02/2023' },
-    { id: 'gh1a', name: 'INTR, GOGL34', date: '02/03/2023' }
+    { id: '8saf', name: 'CBD DI Liquidez', date: '02/02/2023' }
   ]
-
-  // expenses.value.length = 0
 })
 </script>
 
@@ -260,5 +231,11 @@ onMounted(() => {
 
   .transactions-name {
     @apply w-11/12 !mt-0;
+  }
+
+  /* investments */
+
+  .investments {
+    @apply mb-8;
   }
 </style>

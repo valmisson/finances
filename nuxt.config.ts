@@ -8,13 +8,19 @@ export default defineNuxtConfig({
     }
   },
   modules: [
-    'nuxt-icon'
+    'nuxt-icon',
+    ['@pinia/nuxt', {
+      autoImports: ['defineStore']
+    }]
   ],
   css: ['~/assets/styles/main.css'],
   postcss: {
     plugins: {
       tailwindcss: {}
     }
+  },
+  imports: {
+    dirs: ['stores']
   },
   vite: {
     logLevel: 'warn'

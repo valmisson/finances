@@ -13,14 +13,23 @@
   <base-table
     :headers="headers"
     :items="expenses"
+    no-items="Nenhuma despesa cadastrada"
     class="expenses"
   >
+    <template #date="{ value }">
+      {{ toDateFormated(value) }}
+    </template>
+
+    <template #value="{ value }">
+      {{ toCurrencyFormated(value) }}
+    </template>
+
     <template #actions="{ itemId }">
       <NuxtLink :to="`${getPageLink('expenses')}/edit/${itemId}`">
         EDITAR
       </NuxtLink>
 
-      <button class="expenses-remove">
+      <button class="expenses-remove" @click="() => deleteExpense(itemId)">
         REMOVE
       </button>
     </template>
@@ -35,9 +44,14 @@ import {
 } from '#components'
 
 import { getPageLink } from '~/utils/pageMap'
+import { toCurrencyFormated, toDateFormated } from '~/utils/formats'
 
 import { Expense } from '~/types/interface/expense'
 import { TableHeader } from '~/types/components/tables'
+
+const DB_COLLECTION = 'expenses'
+
+const db = useDatabase()
 
 const expenses = ref<Expense[]>([])
 const headers = ref<TableHeader[]>([
@@ -50,13 +64,20 @@ function gotNew (): void {
   navigateTo(`${getPageLink('expenses')}/new`)
 }
 
-onMounted(() => {
-  expenses.value = [
-    { id: 'e48c', name: 'DAS MEI', date: '20/01/2023', value: 'R$ 71,00' },
-    { id: '259a', name: 'Fatura Cartão', value: 'R$ 500,00', date: '05/02/2023' },
-    { id: 'd3f3', name: 'Internet', date: '10/02/2023', value: 'R$ 79,00' },
-    { id: 'c0c4', name: 'Comprar Peugeot 208 Allure 17/18', date: '15/03/2023', value: 'R$ 35.000,00' }
-  ]
+async function getExpenses () {
+  const result = await db.get(DB_COLLECTION)
+
+  expenses.value = result.data as Expense[]
+}
+
+async function deleteExpense (id: string) {
+  await db.delete(DB_COLLECTION, id)
+
+  await getExpenses()
+}
+
+onMounted(async () => {
+  await getExpenses()
 })
 </script>
 

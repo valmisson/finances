@@ -18,7 +18,7 @@
 
             <Icon
               v-if="header.sortable"
-              name="mdi:arrow-up"
+              name="mdi:arrow-down"
               class="sortable-icon"
             />
           </th>
@@ -28,12 +28,12 @@
             scope="col"
             class="actions"
           >
-            <span>Edit</span>
+            <span>Action Name</span>
           </th>
         </tr>
       </thead>
 
-      <tbody>
+      <tbody v-if="tableItems.length">
         <tr
           v-for="itemTable in tableItems"
           :key="itemTable._id"
@@ -56,28 +56,44 @@
         </tr>
       </tbody>
     </table>
+
+    <base-loading
+      v-if="storeLoader.loading && !tableItems.length"
+    />
+
+    <base-card v-if="!storeLoader.loading && !tableItems.length" class="no-items">
+      <base-table-empty>
+        {{ noItems }}
+      </base-table-empty>
+    </base-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Icon } from '#components'
+import {
+  BaseCard,
+  BaseLoading,
+  BaseTableEmpty,
+  Icon
+} from '#components'
 
 import { TableHeader, TableItem } from '~/types/components/tables'
 
-const props = defineProps<{
-  headers: TableHeader[],
-  items: TableItem[]
-}>()
+const storeLoader = useLoader()
 
 const slots = useSlots()
+
+const props = defineProps<{
+  headers: TableHeader[],
+  items: TableItem[],
+  noItems: string
+}>()
 
 const sorted = ref<number>(0)
 const tableItems = ref<TableItem[]>([])
 
-onMounted(async () => {
-  await nextTick()
-
-  tableItems.value = genTableItems(props.items)
+watch(() => (props.items), (items) => {
+  tableItems.value = genTableItems(items)
 })
 
 function genTableItems (items: TableItem[]): TableItem[] {
@@ -110,11 +126,11 @@ function tableTtemsWithoutId (item: TableItem): TableItem {
 
 function sortBy (value: string): void {
   const desc = (a: TableItem, b: TableItem) => {
-    return a[value] > b[value] ? 1 : -1
+    return a[value].value > b[value].value ? -1 : 1
   }
 
   const asc = (a: TableItem, b: TableItem) => {
-    return a[value] < b[value] ? 1 : -1
+    return a[value].value < b[value].value ? -1 : 1
   }
 
   const reset = () => {
@@ -125,7 +141,9 @@ function sortBy (value: string): void {
 
   sorted.value++
 
-  sorted.value === 1 ? tableItems.value.sort(desc) : sorted.value === 2 ? tableItems.value.sort(asc) : reset()
+  sorted.value === 1
+    ? tableItems.value.sort(asc)
+    : sorted.value === 2 ? tableItems.value.sort(desc) : reset()
 }
 </script>
 
@@ -162,7 +180,8 @@ function sortBy (value: string): void {
   }
 
   td.actions {
-    @apply text-xs font-medium flex justify-end gap-6;
+    @apply text-xs font-medium flex justify-end gap-6
+    leading-6;
   }
 
   .sortable {
@@ -188,5 +207,21 @@ function sortBy (value: string): void {
 
   .sorted-rotate .sortable-icon {
     @apply rotate-180 transition-transform duration-300;
+  }
+
+  .no-items {
+    @apply my-0 py-0 border-t border-separate;
+  }
+
+  .card > .table-wrapper > .no-items {
+    @apply my-0;
+  }
+
+  .card > .table-wrapper > .no-items > .table-empty {
+    @apply pb-1;
+  }
+
+  .table-empty {
+    @apply w-full flex justify-center py-4 mt-0;
   }
 </style>

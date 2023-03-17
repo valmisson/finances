@@ -7,10 +7,8 @@
     />
 
     <input
-      :type="type"
+      v-bind="{ ...$props, ...$attrs }"
       :value="modelValue"
-      :placeholder="placeholder"
-      :required="required"
       :class="{ '!pl-9': icon }"
       @input="$emit('update:modelValue', $event.target.value)"
     >
@@ -23,26 +21,16 @@ import { Icon } from '#components'
 defineEmits(['update:modelValue'])
 
 defineProps({
-  modelValue: {
-    type: String,
-    default: ''
-  },
-  icon: {
-    type: String,
-    default: null
-  },
   type: {
     type: String,
     default: 'text'
   },
-  placeholder: {
-    type: String,
-    default: ''
-  },
-  required: {
-    type: Boolean,
-    default: false
-  }
+  placeholder: String,
+  required: Boolean,
+  icon: String,
+  min: String,
+  max: String,
+  modelValue: [String, Number]
 })
 </script>
 
