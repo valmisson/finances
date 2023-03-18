@@ -28,6 +28,6 @@ useHead({
 
   .main {
     @apply max-w-full lg:w-[calc(100%_-_15rem)] 2xl:w-2/3
-    text-gray-700 mx-4 md:mx-12 mt-7 max-lg:z-20;
+    text-gray-700 mx-4 md:mx-12 mt-7;
   }
 </style>

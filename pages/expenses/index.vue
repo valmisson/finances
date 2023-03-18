@@ -10,6 +10,12 @@
     NOVA DESPESA
   </base-button>
 
+  <base-modal-confirm
+    title="Excluir despesa ?"
+    :show="showModalConfirm"
+    @modal:confirm="confirmDeleteExpense"
+  />
+
   <base-table
     :headers="headers"
     :items="expenses"
@@ -40,6 +46,7 @@
 import {
   BaseSubtitle,
   BaseButton,
+  BaseModalConfirm,
   BaseTable
 } from '#components'
 
@@ -60,6 +67,9 @@ const headers = ref<TableHeader[]>([
   { text: 'Valor', value: 'value' }
 ])
 
+const showModalConfirm = ref<boolean>(false)
+const expenseIdBeingDelete = ref<string>('')
+
 function gotNew (): void {
   navigateTo(`${getPageLink('expenses')}/new`)
 }
@@ -70,10 +80,20 @@ async function getExpenses () {
   expenses.value = result.data as Expense[]
 }
 
-async function deleteExpense (id: string) {
-  await db.delete(DB_COLLECTION, id)
+async function confirmDeleteExpense (confirmed: boolean): Promise<void> {
+  if (confirmed) {
+    await db.delete(DB_COLLECTION, expenseIdBeingDelete.value)
 
-  await getExpenses()
+    await getExpenses()
+  }
+
+  showModalConfirm.value = false
+  expenseIdBeingDelete.value = ''
+}
+
+function deleteExpense (id: string) {
+  showModalConfirm.value = true
+  expenseIdBeingDelete.value = id
 }
 
 onMounted(async () => {
