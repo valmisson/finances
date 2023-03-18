@@ -22,7 +22,6 @@
         v-model="expense.date"
         type="date"
         placeholder="dd/mm/aaaa"
-        :min="currentDate"
         required
       />
     </div>
@@ -32,12 +31,10 @@
         Valor
       </label>
 
-      <base-text-field
-        v-model="expense.value"
-        type="number"
+      <base-currency-field
         placeholder="Digite o valor"
-        min="0"
         required
+        @update:amount="updateExpenseValue"
       />
     </div>
 
@@ -56,11 +53,22 @@
 </template>
 
 <script setup lang="ts">
-import { BaseTextField, BaseButton, Icon } from '#components'
+import {
+  BaseCurrencyField,
+  BaseTextField,
+  BaseButton,
+  Icon
+} from '#components'
 
 import { toTimestamp } from '~/utils/formats'
 
 import { Expense } from '~/types/interface/expense'
+
+defineProps<{
+  loading: boolean
+}>()
+
+defineEmits(['submit'])
 
 const expense = reactive<Expense>({
   name: '',
@@ -74,15 +82,9 @@ const newExpenseData = computed(() => {
   return expense
 })
 
-const currentDate = computed(() => {
-  return new Date().toISOString().substring(0, 10)
-})
-
-defineEmits(['submit'])
-
-defineProps<{
-  loading: boolean
-}>()
+function updateExpenseValue (amount: number): void {
+  expense.value = amount
+}
 </script>
 
 <style scoped>
