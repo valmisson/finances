@@ -75,7 +75,7 @@ function gotNew (): void {
 }
 
 async function getExpenses () {
-  const result = await db.get(DB_COLLECTION)
+  const result = await db.getAll(DB_COLLECTION)
 
   expenses.value = result.data as Expense[]
 }

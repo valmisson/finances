@@ -4,6 +4,6 @@ import { Firestore } from 'firebase/firestore'
 declare module '#app' {
   interface NuxtApp {
     $auth: Auth;
-    $database: Firestore;
+    $firestore: Firestore;
   }
 }

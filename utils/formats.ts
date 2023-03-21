@@ -13,6 +13,10 @@ export function toDateFormated (datetime: number, locale = 'pt-BR'): string {
   return formated
 }
 
+export function toInputDate (datetime: string): string {
+  return new Date(datetime).toISOString().substring(0, 10)
+}
+
 export function toTimestamp (date: string): number {
   return Date.parse(date)
 }
@@ -29,4 +33,14 @@ export function toCurrencyFormated (
   }).format(value)
 
   return formated
+}
+
+export function toFractionNumber (
+  value: number,
+  fraction = 2,
+  locale = 'pt-BR'
+) {
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits: fraction
+  }).format(value)
 }

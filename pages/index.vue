@@ -147,7 +147,7 @@ function toggleBalanceDisplay () {
 }
 
 async function getExpenses () {
-  const result = await db.get('expenses', 3)
+  const result = await db.getAll('expenses', 3)
 
   expenses.value = result.data.map((item) => {
     item.date = toDateFormated(item.date)

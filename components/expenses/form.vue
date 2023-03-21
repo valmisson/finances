@@ -32,16 +32,16 @@
       </label>
 
       <base-currency-field
+        v-model="expense.value"
         placeholder="Digite o valor"
         required
-        @update:amount="updateExpenseValue"
       />
     </div>
 
     <div class="form-actions">
       <base-button>
         <Icon
-          v-if="loading"
+          v-if="props.loading"
           name="mdi:loading"
           class="loading"
         />
@@ -64,16 +64,17 @@ import { toTimestamp } from '~/utils/formats'
 
 import { Expense } from '~/types/interface/expense'
 
-defineProps<{
+defineEmits(['submit'])
+
+const props = defineProps<{
+  expense?: Expense
   loading: boolean
 }>()
-
-defineEmits(['submit'])
 
 const expense = reactive<Expense>({
   name: '',
   date: '',
-  value: undefined
+  value: 0
 })
 
 const newExpenseData = computed(() => {
@@ -82,14 +83,21 @@ const newExpenseData = computed(() => {
   return expense
 })
 
-function updateExpenseValue (amount: number): void {
-  expense.value = amount
-}
+onMounted(() => {
+  if (props.expense) {
+    const { name, date, value } = props.expense
+
+    expense.name = name
+    expense.date = date
+    expense.value = value
+  }
+})
 </script>
 
 <style scoped>
   .form {
-    @apply grid grid-cols-1 lg:grid-cols-3 max-lg:gap-y-3 gap-x-4 lg:gap-x-8;
+    @apply grid grid-cols-1 lg:grid-cols-3
+      max-lg:gap-y-3 gap-x-4 lg:gap-x-8;
   }
 
   label {

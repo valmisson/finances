@@ -3,9 +3,11 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   limit,
-  query
+  query,
+  updateDoc
 } from 'firebase/firestore'
 
 import { toTimestamp } from '~/utils/formats'
@@ -29,7 +31,47 @@ export default function () {
       }
     },
 
-    async get (col: string, length = 1000) {
+    async update (col: string, id: string, document: any) {
+      try {
+        const ref = doc($firestore, col, id)
+
+        const updateAt = toTimestamp(new Date().toDateString())
+
+        document.updateAt = updateAt
+
+        await updateDoc(ref, document)
+
+        return { success: true, data: { updateAt } }
+      } catch (error) {
+        throw createError({ statusCode: 400, message: 'failed to update document' })
+      }
+    },
+
+    async getOne<T> (col: string, id: string) {
+      try {
+        storeLoader.startLoading()
+
+        const ref = doc($firestore, col, id)
+
+        const result = await getDoc(ref)
+
+        storeLoader.endLoading()
+
+        if (result.exists()) {
+          const data = result.data() as T
+
+          return { success: true, data }
+        }
+
+        return { success: false, data: null }
+      } catch (error) {
+        storeLoader.endLoading()
+
+        throw createError({ statusCode: 400, message: 'failed to get document' })
+      }
+    },
+
+    async getAll (col: string, length = 1000) {
       try {
         storeLoader.startLoading()
 
@@ -53,7 +95,7 @@ export default function () {
       } catch (error) {
         storeLoader.endLoading()
 
-        throw createError({ statusCode: 400, message: 'failed to get documents' })
+        throw createError({ statusCode: 400, message: 'failed to get all documents' })
       }
     },
 

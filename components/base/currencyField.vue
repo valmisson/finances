@@ -11,15 +11,33 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  placeholder: String,
-  required: Boolean
-})
+import { toFractionNumber } from '~/utils/formats'
 
-const emit = defineEmits(['update:amount'])
+const props = defineProps<{
+  value?: string,
+  placeholder: string,
+  required: boolean,
+  modelValue: string
+}>()
+
+const emit = defineEmits([
+  'update:amount',
+  'update:modelValue'
+])
 
 const amountValue = ref<string>()
 const amountNumber = ref<number>()
+
+onMounted(async () => {
+  await nextTick()
+
+  if (props.modelValue) {
+    const value = parseFloat(props.modelValue)
+
+    amountValue.value = toFractionNumber(value)
+    amountNumber.value = value
+  }
+})
 
 function updateAmount (): void {
   if (!amountValue.value) {
@@ -27,9 +45,7 @@ function updateAmount (): void {
   }
 
   const amount = parseFloat(amountValue.value)
-  const formated = new Intl.NumberFormat('pt-BR', {
-    minimumFractionDigits: 2
-  }).format(amount)
+  const formated = toFractionNumber(amount)
 
   amountNumber.value = amount
   amountValue.value = formated
@@ -43,6 +59,7 @@ function inputAmount (event: any): void {
   amountNumber.value = amountNumberOnly
 
   emit('update:amount', amountNumber.value)
+  emit('update:modelValue', amountNumberOnly)
 }
 
 function resetAmount (): void {
