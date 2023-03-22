@@ -3,5 +3,6 @@ export interface Expense {
   name: string;
   date: string;
   value?: number;
-  createdAt?: Date;
+  createdAt?: number;
+  updateAt?: number;
 }

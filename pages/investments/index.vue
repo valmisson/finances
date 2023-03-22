@@ -1,20 +1,20 @@
 <template>
   <base-subtitle>
-    Despesas
+    Investimentos
   </base-subtitle>
 
   <base-button
-    class="expenses-new"
+    class="investments-new"
     @click="gotNew"
   >
-    NOVA DESPESA
+    Novo investimento
   </base-button>
 
   <base-table
     :headers="headers"
-    :items="expenses"
-    no-items="Nenhuma despesa cadastrada"
-    class="expenses"
+    :items="investiments"
+    class="investments"
+    no-items="Nenhum investimento cadastrado"
   >
     <template #date="{ value }">
       {{ toDateFormated(value) }}
@@ -25,11 +25,11 @@
     </template>
 
     <template #actions="{ itemId }">
-      <NuxtLink :to="`${getPageLink('expenses')}/edit/${itemId}`">
+      <NuxtLink :to="`${investimentsPageLink}/edit/${itemId}`">
         EDITAR
       </NuxtLink>
 
-      <button class="expenses-remove" @click="deleteExpense(itemId)">
+      <button class="investments-remove" @click="removeinvestment(itemId)">
         REMOVE
       </button>
     </template>
@@ -38,79 +38,84 @@
   <base-modal-confirm
     title="Excluir despesa ?"
     :show="showModalConfirm"
-    @modal:confirm="confirmDeleteExpense"
+    @modal:confirm="confirmDeleteInvestment"
   />
 </template>
 
 <script setup lang="ts">
 import {
-  BaseSubtitle,
   BaseButton,
-  BaseModalConfirm,
-  BaseTable
+  BaseTable,
+  BaseSubtitle
 } from '#components'
 
 import { getPageLink } from '~/utils/pageMap'
 import { toCurrencyFormated, toDateFormated } from '~/utils/formats'
 
-import { Expense } from '~/types/interface/expense'
 import { TableHeader } from '~/types/components/tables'
+import { Investment } from '~/types/interface/investment'
 
-const DB_COLLECTION = 'expenses'
+const DB_COLLECTION = 'investments'
 
 const db = useDatabase()
 
-const expenses = ref<Expense[]>([])
 const headers = ref<TableHeader[]>([
   { text: 'Nome', value: 'name' },
   { text: 'Data', value: 'date', sortable: true },
   { text: 'Valor', value: 'value' }
 ])
 
+const investiments = ref<Investment[]>()
+
 const showModalConfirm = ref<boolean>(false)
-const expenseIdBeingDelete = ref<string>('')
+const investmentIdBeingDelete = ref<string>('')
+
+const investimentsPageLink = computed(() => getPageLink('investments'))
+
+onMounted(async () => {
+  await getInvestments()
+
+  // investiments.value = [
+  //   { id: '1wdva', name: 'CDB DI', date: '1681084800000', value: 4000 }
+  // ]
+})
 
 function gotNew (): void {
-  navigateTo(`${getPageLink('expenses')}/new`)
+  navigateTo(`${investimentsPageLink.value}/new`)
 }
 
-async function getExpenses () {
+async function getInvestments (): Promise<void> {
   const result = await db.getAll(DB_COLLECTION)
 
-  expenses.value = result.data as Expense[]
+  investiments.value = result.data as Investment[]
 }
 
-async function confirmDeleteExpense (confirmed: boolean): Promise<void> {
+async function confirmDeleteInvestment (confirmed: boolean): Promise<void> {
   if (confirmed) {
-    await db.delete(DB_COLLECTION, expenseIdBeingDelete.value)
+    await db.delete(DB_COLLECTION, investmentIdBeingDelete.value)
 
-    await getExpenses()
+    await getInvestments()
   }
 
   showModalConfirm.value = false
-  expenseIdBeingDelete.value = ''
+  investmentIdBeingDelete.value = ''
 }
 
-function deleteExpense (id: string) {
+function removeinvestment (id: string): void {
   showModalConfirm.value = true
-  expenseIdBeingDelete.value = id
+  investmentIdBeingDelete.value = id
 }
-
-onMounted(async () => {
-  await getExpenses()
-})
 </script>
 
 <style scoped>
-  .expenses-new {
+  .investments-new {
     @apply mt-6 mb-2 lg:mt-8 lg:mb-4;
   }
 
-  .expenses {
+  .investments {
     @apply mt-6 lg:mt-4;
   }
-
-  .expenses-remove {
+  .investments-remove {
     @apply text-red-500;
   }
 </style>
