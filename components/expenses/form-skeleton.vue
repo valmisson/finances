@@ -25,22 +25,26 @@
 <style scoped>
   .form-skeleton {
     @apply grid grid-cols-1 lg:grid-cols-3
-      max-lg:gap-y-3 gap-x-4 lg:gap-x-8 pt-1;
+      max-lg:gap-y-3 gap-x-4 lg:gap-x-8 py-2;
   }
 
   .form-label-skeleton,
   .form-input-skeleton,
   .form-btn-skeleton {
-    @apply bg-gradient-to-l to-zinc-200 from-zinc-100
-    rounded animate-pulse;
+    @apply bg-gray-100 rounded animate-pulse;
   }
 
   .form-label-skeleton {
-    @apply w-2/6 h-4;
+    @apply w-1/5 h-4;
   }
 
   .form-input-skeleton {
-    @apply w-full h-9 mt-3;
+    @apply w-full h-10 mt-4;
+  }
+
+  .form-input-skeleton,
+  .form-btn-skeleton {
+    @apply border border-gray-200;
   }
 
   .form-actions-skeleton {
@@ -48,7 +52,7 @@
   }
 
   .form-btn-skeleton {
-    @apply w-28 h-10;
+    @apply w-28 h-12;
   }
 
   .form-label-skeleton span,

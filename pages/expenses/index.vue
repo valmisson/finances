@@ -10,12 +10,6 @@
     NOVA DESPESA
   </base-button>
 
-  <base-modal-confirm
-    title="Excluir despesa ?"
-    :show="showModalConfirm"
-    @modal:confirm="confirmDeleteExpense"
-  />
-
   <base-table
     :headers="headers"
     :items="expenses"
@@ -40,6 +34,12 @@
       </button>
     </template>
   </base-table>
+
+  <base-modal-confirm
+    title="Excluir despesa ?"
+    :show="showModalConfirm"
+    @modal:confirm="confirmDeleteExpense"
+  />
 </template>
 
 <script setup lang="ts">

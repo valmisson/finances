@@ -57,22 +57,22 @@
       </tbody>
     </table>
 
-    <base-loading
+    <base-table-skeleton
       v-if="storeLoader.loading && !tableItems.length"
+      :cols="props.headers.length"
+      :actions="!!slots.actions"
     />
 
-    <base-card v-if="!storeLoader.loading && !tableItems.length" class="no-items">
-      <base-table-empty>
-        {{ noItems }}
-      </base-table-empty>
-    </base-card>
+    <base-table-empty
+      v-if="!storeLoader.loading && !tableItems.length"
+    >
+      {{ noItems }}
+    </base-table-empty>
   </div>
 </template>
 
 <script setup lang="ts">
 import {
-  BaseCard,
-  BaseLoading,
   BaseTableEmpty,
   Icon
 } from '#components'
@@ -207,21 +207,5 @@ function sortBy (value: string): void {
 
   .sorted-rotate .sortable-icon {
     @apply rotate-180 transition-transform duration-300;
-  }
-
-  .no-items {
-    @apply my-0 py-0 border-t border-separate;
-  }
-
-  .card > .table-wrapper > .no-items {
-    @apply my-0;
-  }
-
-  .card > .table-wrapper > .no-items > .table-empty {
-    @apply pb-1;
-  }
-
-  .table-empty {
-    @apply w-full flex justify-center py-4 mt-0;
   }
 </style>
