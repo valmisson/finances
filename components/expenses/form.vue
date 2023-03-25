@@ -1,5 +1,8 @@
 <template>
-  <form class="form" @submit.prevent="$emit('submit', newExpenseData)">
+  <base-form
+    :loading="props.loading"
+    @submit="$emit('submit', newExpenseData)"
+  >
     <div>
       <label for="name">
         Nome
@@ -37,27 +40,14 @@
         required
       />
     </div>
-
-    <div class="form-actions">
-      <base-button>
-        <Icon
-          v-if="props.loading"
-          name="mdi:loading"
-          class="loading"
-        />
-
-        <span v-else>ENVIAR</span>
-      </base-button>
-    </div>
-  </form>
+  </base-form>
 </template>
 
 <script setup lang="ts">
 import {
   BaseCurrencyField,
-  BaseTextField,
-  BaseButton,
-  Icon
+  BaseForm,
+  BaseTextField
 } from '#components'
 
 import { toTimestamp } from '~/utils/formats'
@@ -78,9 +68,15 @@ const expense = reactive<Expense>({
 })
 
 const newExpenseData = computed(() => {
-  expense.date = toTimestamp(expense.date) as any
+  const { name, date, value } = expense
 
-  return expense
+  const expenseData: Expense = {
+    name,
+    date: toTimestamp(date) as any,
+    value
+  }
+
+  return expenseData
 })
 
 onMounted(() => {

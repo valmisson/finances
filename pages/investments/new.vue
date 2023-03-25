@@ -6,7 +6,7 @@
   <base-breadcrumb :items="breadcrumbs" />
 
   <base-card class="new-investments">
-    <investments-form @submit="submitNew" />
+    <investments-form :loading="loading" @submit="submitNew" />
   </base-card>
 </template>
 

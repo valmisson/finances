@@ -1,5 +1,9 @@
 <template>
-  <base-form v-model="investment" @submit="$emit('submit', newInvestmentData)">
+  <base-form
+    v-model="investment"
+    :loading="props.loading"
+    @submit="$emit('submit', newInvestmentData)"
+  >
     <fieldset>
       <label for="name">
         Nome
@@ -54,6 +58,7 @@ import { Investment } from '~/types/interface/investment'
 
 const props = defineProps<{
   investment?: Investment
+  loading: boolean
 }>()
 
 defineEmits(['submit'])
@@ -65,9 +70,15 @@ const investment = reactive<Investment>({
 })
 
 const newInvestmentData = computed<Investment>(() => {
-  investment.date = toTimestamp(investment.date) as any
+  const { name, date, value } = investment
 
-  return investment
+  const investmentData: Investment = {
+    name,
+    date: toTimestamp(date) as any,
+    value
+  }
+
+  return investmentData
 })
 
 onMounted(() => {
