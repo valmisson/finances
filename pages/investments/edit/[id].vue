@@ -59,6 +59,13 @@ async function getInvestment (investmentId: string) {
   if (result.success) {
     investment.value = result.data as Investment
   }
+
+  if (!result.data) {
+    showError({
+      statusCode: 404,
+      statusMessage: `Investment not found: ${investmentId}`
+    })
+  }
 }
 
 async function editInvestment (content: Investment) {

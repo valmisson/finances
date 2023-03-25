@@ -50,7 +50,7 @@ import {
   BaseTextField
 } from '#components'
 
-import { toTimestamp } from '~/utils/formats'
+import { toInputDate, toTimestamp } from '~/utils/formats'
 
 import { Expense } from '~/types/interface/expense'
 
@@ -84,7 +84,7 @@ onMounted(() => {
     const { name, date, value } = props.expense
 
     expense.name = name
-    expense.date = date
+    expense.date = toInputDate(date)
     expense.value = value
   }
 })

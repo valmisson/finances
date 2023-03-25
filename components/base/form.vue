@@ -17,7 +17,7 @@ import {
 
 const props = defineProps<{
   loading?: boolean
-  modelValue: string
+  modelValue?: string
 }>()
 
 const emit = defineEmits(['submit', 'update:modelValue'])

@@ -6,10 +6,10 @@
   <base-breadcrumb :items="breadcrumbs" />
 
   <base-card class="edit-expense">
-    <expenses-form-skeleton v-if="!hasExpense" />
+    <expenses-form-skeleton v-if="!expense" />
 
     <expenses-form
-      v-if="hasExpense"
+      v-else
       :expense="expense"
       :loading="loading"
       @submit="editExpense"
@@ -25,7 +25,6 @@ import {
 } from '#components'
 
 import { getPageLink } from '~/utils/pageMap'
-import { toInputDate } from '~/utils/formats'
 
 import { Breadcrumb } from '~/types/components/breadcrumb'
 import { Expense } from '~/types/interface/expense'
@@ -33,23 +32,18 @@ import { Expense } from '~/types/interface/expense'
 const route = useRoute()
 const db = useDatabase()
 
-const expense = reactive<Expense>({
-  name: '',
-  date: '',
-  value: undefined
-})
+const expense = ref<Expense>()
 
-const expensesPageLink = ref(getPageLink('expenses'))
 const loading = ref<boolean>(false)
 const errors = ref<string>('')
+
+const expenseId = computed(() => route.params.id as string)
+const expensesPageLink = ref(getPageLink('expenses'))
 
 const breadcrumbs = ref<Breadcrumb[]>([
   { text: 'Despesas', href: expensesPageLink.value },
   { text: 'Editar Despesas' }
 ])
-
-const expenseId = computed(() => route.params.id as string)
-const hasExpense = computed(() => expense.name && expense.value && expense.value)
 
 onMounted(async () => {
   if (expenseId.value) {
@@ -60,12 +54,15 @@ onMounted(async () => {
 async function getExpense (expenseId: string): Promise<void> {
   const result = await db.getOne<Expense>('expenses', expenseId)
 
-  const expenseData = result.data
+  if (result.success) {
+    expense.value = result.data as Expense
+  }
 
-  if (expenseData) {
-    expense.name = expenseData.name
-    expense.date = toInputDate(expenseData.date)
-    expense.value = expenseData.value
+  if (!result.data) {
+    showError({
+      statusCode: 404,
+      statusMessage: `Expense not found: ${expenseId}`
+    })
   }
 }
 

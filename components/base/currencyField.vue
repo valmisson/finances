@@ -17,7 +17,7 @@ const props = defineProps<{
   value?: string,
   placeholder: string,
   required: boolean,
-  modelValue: string
+  modelValue?: string | number
 }>()
 
 const emit = defineEmits([
@@ -32,7 +32,7 @@ onMounted(async () => {
   await nextTick()
 
   if (props.modelValue) {
-    const value = parseFloat(props.modelValue)
+    const value = parseFloat(props.modelValue as string)
 
     amountValue.value = toFractionNumber(value)
     amountNumber.value = value
