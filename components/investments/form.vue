@@ -48,7 +48,13 @@ import {
   BaseTextField
 } from '#components'
 
+import { toInputDate, toTimestamp } from '~/utils/formats'
+
 import { Investment } from '~/types/interface/investment'
+
+const props = defineProps<{
+  investment?: Investment
+}>()
 
 defineEmits(['submit'])
 
@@ -62,5 +68,15 @@ const newInvestmentData = computed<Investment>(() => {
   investment.date = toTimestamp(investment.date) as any
 
   return investment
+})
+
+onMounted(() => {
+  if (props.investment) {
+    const { name, date, value } = props.investment
+
+    investment.name = name
+    investment.date = toInputDate(date)
+    investment.value = value
+  }
 })
 </script>
