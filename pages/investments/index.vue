@@ -12,7 +12,7 @@
 
   <base-table
     :headers="headers"
-    :items="investiments"
+    :items="investments"
     class="investments"
     no-items="Nenhum investimento cadastrado"
   >
@@ -25,7 +25,7 @@
     </template>
 
     <template #actions="{ itemId }">
-      <NuxtLink :to="`${investimentsPageLink}/edit/${itemId}`">
+      <NuxtLink :to="`${investmentsPageLink}/edit/${itemId}`">
         EDITAR
       </NuxtLink>
 
@@ -65,29 +65,25 @@ const headers = ref<TableHeader[]>([
   { text: 'Valor', value: 'value' }
 ])
 
-const investiments = ref<Investment[]>()
+const investments = ref<Investment[]>()
 
 const showModalConfirm = ref<boolean>(false)
 const investmentIdBeingDelete = ref<string>('')
 
-const investimentsPageLink = computed(() => getPageLink('investments'))
+const investmentsPageLink = computed(() => getPageLink('investments'))
 
 onMounted(async () => {
   await getInvestments()
-
-  // investiments.value = [
-  //   { id: '1wdva', name: 'CDB DI', date: '1681084800000', value: 4000 }
-  // ]
 })
 
 function gotNew (): void {
-  navigateTo(`${investimentsPageLink.value}/new`)
+  navigateTo(`${investmentsPageLink.value}/new`)
 }
 
 async function getInvestments (): Promise<void> {
   const result = await db.getAll(DB_COLLECTION)
 
-  investiments.value = result.data as Investment[]
+  investments.value = result.data as Investment[]
 }
 
 async function confirmDeleteInvestment (confirmed: boolean): Promise<void> {

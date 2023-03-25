@@ -156,10 +156,22 @@ async function getExpenses () {
   }) as Expense[]
 }
 
+async function getInvestments () {
+  const result = await db.getAll('investments', 3)
+
+  investments.value = result.data.map((item) => {
+    item.date = toDateFormated(item.date)
+
+    return item
+  }) as Investment[]
+}
+
 onMounted(async () => {
   balanceDisplay.value = useCookie<boolean>('balance_display').value ?? false
 
   await getExpenses()
+
+  await getInvestments()
 
   transactions.value = [
     {
@@ -172,10 +184,6 @@ onMounted(async () => {
         withdrawal: false
       }
     }
-  ]
-
-  investments.value = [
-    { id: '8saf', name: 'CBD DI Liquidez', date: '02/02/2023' }
   ]
 })
 </script>

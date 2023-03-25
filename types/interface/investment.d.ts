@@ -1,5 +1,5 @@
 export interface Investment {
-  id: string;
+  id?: string;
   name: string;
   date: string;
   value?: number;
