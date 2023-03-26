@@ -9,8 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { AppFsLogin } from '#components'
-
 const appConfig = useAppConfig()
 
 useHead({

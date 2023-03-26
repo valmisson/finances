@@ -14,7 +14,7 @@ import { toTimestamp } from '~/utils/formats'
 
 export default function () {
   const { $firestore } = useNuxtApp()
-  const storeLoader = useLoader()
+  const dataLoader = useDataLoader()
 
   const database = {
     async add (col: string, document: any) {
@@ -49,13 +49,11 @@ export default function () {
 
     async getOne<T> (col: string, id: string) {
       try {
-        storeLoader.startLoading()
+        dataLoader.startLoading()
 
         const ref = doc($firestore, col, id)
 
         const result = await getDoc(ref)
-
-        storeLoader.endLoading()
 
         if (result.exists()) {
           const data = result.data() as T
@@ -65,15 +63,15 @@ export default function () {
 
         return { success: false, data: null }
       } catch (error) {
-        storeLoader.endLoading()
-
         throw createError({ statusCode: 400, message: 'failed to get document' })
+      } finally {
+        dataLoader.endLoading()
       }
     },
 
     async getAll (col: string, length = 1000) {
       try {
-        storeLoader.startLoading()
+        dataLoader.startLoading()
 
         const ref = collection($firestore, col)
 
@@ -89,13 +87,11 @@ export default function () {
           return data
         })
 
-        storeLoader.endLoading()
-
         return { success: true, data }
       } catch (error) {
-        storeLoader.endLoading()
-
         throw createError({ statusCode: 400, message: 'failed to get all documents' })
+      } finally {
+        dataLoader.endLoading()
       }
     },
 

@@ -11,20 +11,14 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BaseButton
-} from '#components'
-
-const props = defineProps<{
+defineProps<{
   loading?: boolean
-  modelValue?: string
 }>()
 
-const emit = defineEmits(['submit', 'update:modelValue'])
+const emit = defineEmits(['submit'])
 
 function onSubmit (): void {
-  emit('update:modelValue', props.modelValue)
-  emit('submit', props.modelValue)
+  emit('submit')
 }
 </script>
 

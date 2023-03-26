@@ -58,13 +58,13 @@
     </table>
 
     <base-table-skeleton
-      v-if="storeLoader.loading && !tableItems.length"
+      v-if="dataLoader.pending && !tableItems.length"
       :cols="props.headers.length"
       :actions="!!slots.actions"
     />
 
     <base-table-empty
-      v-if="!storeLoader.loading && !tableItems.length"
+      v-if="!dataLoader.pending && !tableItems.length"
     >
       {{ noItems }}
     </base-table-empty>
@@ -72,16 +72,11 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BaseTableEmpty,
-  Icon
-} from '#components'
-
 import { TableHeader, TableItem } from '~/types/components/tables'
 
-const storeLoader = useLoader()
-
 const slots = useSlots()
+
+const dataLoader = useDataLoader()
 
 const props = defineProps<{
   headers: TableHeader[],

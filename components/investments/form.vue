@@ -1,6 +1,5 @@
 <template>
   <base-form
-    v-model="investment"
     :loading="props.loading"
     @submit="$emit('submit', newInvestmentData)"
   >
@@ -46,14 +45,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BaseCurrencyField,
-  BaseForm,
-  BaseTextField
-} from '#components'
-
-import { toInputDate, toTimestamp } from '~/utils/formats'
-
 import { Investment } from '~/types/interface/investment'
 
 const props = defineProps<{

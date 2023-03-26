@@ -1,11 +1,11 @@
 export default defineStore('loading', {
-  state: () => ({ loading: true }),
+  state: () => ({ pending: true }),
   actions: {
     startLoading () {
-      this.loading = true
+      this.pending = true
     },
     endLoading () {
-      this.loading = false
+      this.pending = false
     }
   }
 })

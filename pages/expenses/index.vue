@@ -43,16 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BaseSubtitle,
-  BaseButton,
-  BaseModalConfirm,
-  BaseTable
-} from '#components'
-
-import { getPageLink } from '~/utils/pageMap'
-import { toCurrencyFormated, toDateFormated } from '~/utils/formats'
-
 import { Expense } from '~/types/interface/expense'
 import { TableHeader } from '~/types/components/tables'
 
@@ -69,6 +59,10 @@ const headers = ref<TableHeader[]>([
 
 const showModalConfirm = ref<boolean>(false)
 const expenseIdBeingDelete = ref<string>('')
+
+onMounted(async () => {
+  await getExpenses()
+})
 
 function gotNew (): void {
   navigateTo(`${getPageLink('expenses')}/new`)
@@ -95,10 +89,6 @@ function deleteExpense (id: string) {
   showModalConfirm.value = true
   expenseIdBeingDelete.value = id
 }
-
-onMounted(async () => {
-  await getExpenses()
-})
 </script>
 
 <style scoped>

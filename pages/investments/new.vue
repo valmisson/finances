@@ -11,13 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BaseBreadcrumb,
-  BaseCard,
-  BaseSubtitle,
-  InvestmentsForm
-} from '#components'
-
 import { Breadcrumb } from '~/types/components/breadcrumb'
 import { Investment } from '~/types/interface/investment'
 
@@ -39,15 +32,13 @@ async function submitNew (content: Investment): Promise<void> {
 
     await db.add('investments', content)
 
-    loading.value = false
-
     navigateTo(investmentsPageLink.value)
   } catch (error) {
-    loading.value = false
-
     if (error instanceof Error) {
       errors.value = error.message
     }
+  } finally {
+    loading.value = false
   }
 }
 </script>

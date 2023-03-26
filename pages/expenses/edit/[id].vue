@@ -18,14 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BaseBreadcrumb,
-  BaseCard,
-  ExpensesForm
-} from '#components'
-
-import { getPageLink } from '~/utils/pageMap'
-
 import { Breadcrumb } from '~/types/components/breadcrumb'
 import { Expense } from '~/types/interface/expense'
 
@@ -72,15 +64,13 @@ async function editExpense (content: Expense): Promise<void> {
 
     await db.update('expenses', expenseId.value, content)
 
-    loading.value = false
-
     navigateTo(expensesPageLink.value)
   } catch (error) {
-    loading.value = false
-
     if (error instanceof Error) {
       errors.value = error.message
     }
+  } finally {
+    loading.value = false
   }
 }
 </script>

@@ -11,8 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { toFractionNumber } from '~/utils/formats'
-
 const props = defineProps<{
   value?: string,
   placeholder: string,

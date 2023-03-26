@@ -44,14 +44,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BaseCurrencyField,
-  BaseForm,
-  BaseTextField
-} from '#components'
-
-import { toInputDate, toTimestamp } from '~/utils/formats'
-
 import { Expense } from '~/types/interface/expense'
 
 defineEmits(['submit'])

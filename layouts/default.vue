@@ -9,8 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { AppFsSidebar } from '#components'
-
 const config = useAppConfig()
 
 useHead({

@@ -43,15 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BaseButton,
-  BaseTable,
-  BaseSubtitle
-} from '#components'
-
-import { getPageLink } from '~/utils/pageMap'
-import { toCurrencyFormated, toDateFormated } from '~/utils/formats'
-
 import { TableHeader } from '~/types/components/tables'
 import { Investment } from '~/types/interface/investment'
 
@@ -65,7 +56,7 @@ const headers = ref<TableHeader[]>([
   { text: 'Valor', value: 'value' }
 ])
 
-const investments = ref<Investment[]>()
+const investments = ref<Investment[]>([])
 
 const showModalConfirm = ref<boolean>(false)
 const investmentIdBeingDelete = ref<string>('')

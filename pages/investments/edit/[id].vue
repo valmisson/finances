@@ -13,22 +13,13 @@
     <investments-form
       v-else
       :investment="investment"
+      :loading="loading"
       @submit="editInvestment"
     />
   </base-card>
 </template>
 
 <script setup lang="ts">
-import {
-  BaseCard,
-  BaseBreadcrumb,
-  BaseSubtitle,
-  InvestmentsForm,
-  InvestmentsFormSkeleton
-} from '#components'
-
-import { getPageLink } from '~/utils/pageMap'
-
 import { Breadcrumb } from '~/types/components/breadcrumb'
 import { Investment } from '~/types/interface/investment'
 
@@ -74,15 +65,13 @@ async function editInvestment (content: Investment) {
 
     await db.update(DB_COLLECTION, investmentId.value as string, content)
 
-    loading.value = false
-
     navigateTo(investmentsPageLink.value)
   } catch (error) {
-    loading.value = false
-
     if (error instanceof Error) {
       errors.value = error.message
     }
+  } finally {
+    loading.value = false
   }
 }
 </script>

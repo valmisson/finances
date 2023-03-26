@@ -1,6 +1,8 @@
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
+
 import { getExpiresDate } from '~/utils/cookie'
 import { handleAuthErros } from '~/utils/firebaseErrors'
+
 import { Authentication } from '~/types/composables/auth'
 
 export default function () {

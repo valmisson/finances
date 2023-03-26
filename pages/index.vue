@@ -93,20 +93,10 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BaseCard,
-  BaseCardTitle,
-  BaseCardText,
-  BaseSubtitle,
-  BaseTable
-} from '#components'
-
-import { getPageLink } from '~/utils/pageMap'
-
 import { Transaction } from '~/types/interface/transaction'
 import { Expense } from '~/types/interface/expense'
 import { Investment } from '~/types/interface/investment'
-import { TableHeader } from '~~/types/components/tables'
+import { TableHeader } from '~/types/components/tables'
 
 const db = useDatabase()
 
@@ -140,6 +130,27 @@ const balanceHideIcon = computed(() => {
   return balanceDisplay.value ? 'ic:baseline-remove-red-eye' : 'ic:round-visibility-off'
 })
 
+onMounted(async () => {
+  balanceDisplay.value = useCookie<boolean>('balance_display').value ?? false
+
+  await getExpenses()
+
+  await getInvestments()
+
+  transactions.value = [
+    {
+      id: 'er3r',
+      name: 'Serviço Fix Bugs',
+      date: '27/01/2023',
+      value: '+R$ 1.200,00',
+      type: {
+        name: 'Deposito',
+        withdrawal: false
+      }
+    }
+  ]
+})
+
 function toggleBalanceDisplay () {
   balanceDisplay.value = !balanceDisplay.value
 
@@ -165,27 +176,6 @@ async function getInvestments () {
     return item
   }) as Investment[]
 }
-
-onMounted(async () => {
-  balanceDisplay.value = useCookie<boolean>('balance_display').value ?? false
-
-  await getExpenses()
-
-  await getInvestments()
-
-  transactions.value = [
-    {
-      id: 'er3r',
-      name: 'Serviço Fix Bugs',
-      date: '27/01/2023',
-      value: '+R$ 1.200,00',
-      type: {
-        name: 'Deposito',
-        withdrawal: false
-      }
-    }
-  ]
-})
 </script>
 
 <style scoped>

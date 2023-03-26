@@ -23,8 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { AppFsSidebar, BaseButton } from '#components'
-
 const appConfig = useAppConfig()
 const nuxtConfig = useRuntimeConfig()
 const auth = useAuth()

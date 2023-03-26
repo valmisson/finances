@@ -11,17 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BaseSubtitle,
-  BaseBreadcrumb,
-  BaseCard,
-  ExpensesForm
-} from '#components'
-
-import { getPageLink } from '~/utils/pageMap'
-
 import { Breadcrumb } from '~/types/components/breadcrumb'
-import { Expense } from '~~/types/interface/expense'
+import { Expense } from '~/types/interface/expense'
 
 const db = useDatabase()
 
@@ -40,15 +31,13 @@ async function submitNew (content: Expense) {
 
     await db.add('expenses', content)
 
-    loading.value = false
-
     navigateTo(expensesPageLink.value)
   } catch (error) {
-    loading.value = false
-
     if (error instanceof Error) {
       errors.value = error.message
     }
+  } finally {
+    loading.value = false
   }
 }
 </script>

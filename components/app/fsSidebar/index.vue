@@ -28,12 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  AppFsSidebarBrand,
-  AppFsSidebarMenu,
-  AppFsSidebarLogout
-} from '#components'
-
 const sidebarVisible = ref(false)
 
 function toggleSidebar () {

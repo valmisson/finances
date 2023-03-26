@@ -35,8 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import { BaseButton, BaseErrorMessage, BaseTextField } from '#components'
-
 const auth = useAuth()
 
 const email = ref<string>('')
