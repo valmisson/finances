@@ -63,6 +63,10 @@ const investmentIdBeingDelete = ref<string>('')
 
 const investmentsPageLink = computed(() => getPageLink('investments'))
 
+useHead({
+  title: 'Investimentos'
+})
+
 onMounted(async () => {
   await getInvestments()
 })

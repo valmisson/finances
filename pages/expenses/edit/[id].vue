@@ -1,6 +1,6 @@
 <template>
   <base-subtitle>
-    Editar Despesas
+    Editar Despesa
   </base-subtitle>
 
   <base-breadcrumb :items="breadcrumbs" />
@@ -34,8 +34,12 @@ const expensesPageLink = ref(getPageLink('expenses'))
 
 const breadcrumbs = ref<Breadcrumb[]>([
   { text: 'Despesas', href: expensesPageLink.value },
-  { text: 'Editar Despesas' }
+  { text: 'Editar Despesa' }
 ])
+
+useHead({
+  title: 'Editar Despesa'
+})
 
 onMounted(async () => {
   if (expenseId.value) {

@@ -1,6 +1,6 @@
 <template>
   <base-subtitle>
-    Nova Despesas
+    Nova Despesa
   </base-subtitle>
 
   <base-breadcrumb :items="breadcrumbs" />
@@ -22,8 +22,12 @@ const errors = ref<string>('')
 
 const breadcrumbs = ref<Breadcrumb[]>([
   { text: 'Despesas', href: expensesPageLink.value },
-  { text: 'Nova Despesas' }
+  { text: 'Nova Despesa' }
 ])
+
+useHead({
+  title: 'Nova Despesa'
+})
 
 async function submitNew (content: Expense) {
   try {

@@ -26,6 +26,10 @@ const breadcrumbs = ref<Breadcrumb[]>([
   { text: 'Novo investimento' }
 ])
 
+useHead({
+  title: 'Novo investimento'
+})
+
 async function submitNew (content: Investment): Promise<void> {
   try {
     loading.value = true

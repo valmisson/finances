@@ -40,6 +40,10 @@ const breadcrumbs = ref<Breadcrumb[]>([
   { text: 'Editar investimento' }
 ])
 
+useHead({
+  title: 'Editar Investimento'
+})
+
 onMounted(async () => {
   await getInvestment(investmentId.value as string)
 })

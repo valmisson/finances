@@ -60,6 +60,10 @@ const headers = ref<TableHeader[]>([
 const showModalConfirm = ref<boolean>(false)
 const expenseIdBeingDelete = ref<string>('')
 
+useHead({
+  title: 'Despesas'
+})
+
 onMounted(async () => {
   await getExpenses()
 })
