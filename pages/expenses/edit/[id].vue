@@ -6,9 +6,9 @@
   <base-breadcrumb :items="breadcrumbs" />
 
   <base-card class="edit-expense">
-    <expenses-form-skeleton v-if="!expense" />
+    <page-expenses-form-skeleton v-if="!expense" />
 
-    <expenses-form
+    <page-expenses-form
       v-else
       :expense="expense"
       :loading="loading"

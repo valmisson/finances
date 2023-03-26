@@ -8,7 +8,7 @@
         Nome
       </label>
 
-      <base-text-field
+      <base-field-text
         id="name"
         v-model="investment.name"
         placeholder="Digite o nome"
@@ -21,7 +21,7 @@
         Data
       </label>
 
-      <base-text-field
+      <base-field-text
         id="date"
         v-model="investment.date"
         type="date"
@@ -35,7 +35,7 @@
         Valor
       </label>
 
-      <base-currency-field
+      <base-field-currency
         v-model="investment.value"
         placeholder="Digite o valor"
         required

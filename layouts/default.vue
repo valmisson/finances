@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <app-fs-sidebar />
+    <app-sidebar />
 
     <main class="main">
       <slot />

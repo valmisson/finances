@@ -1,10 +1,10 @@
 <template>
   <aside class="sidebar" :class="{ 'open': sidebarVisible }">
-    <app-fs-sidebar-brand class="sidebar-brand" />
+    <app-sidebar-brand class="sidebar-brand" />
 
-    <app-fs-sidebar-menu @changed:page="hideSidebar" />
+    <app-sidebar-menu @changed:page="hideSidebar" />
 
-    <app-fs-sidebar-logout />
+    <app-sidebar-logout />
   </aside>
 
   <header class="header-mobile">
@@ -15,7 +15,7 @@
       <Icon class="header-mobile-icon" name="mdi:menu" />
     </button>
 
-    <app-fs-sidebar-brand />
+    <app-sidebar-brand />
   </header>
 
   <div

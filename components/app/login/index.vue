@@ -4,7 +4,7 @@
       Login
     </h2>
 
-    <base-text-field
+    <base-field-text
       v-model="email"
       type="email"
       placeholder="E-mail"
@@ -12,7 +12,7 @@
       required
     />
 
-    <base-text-field
+    <base-field-text
       v-model="password"
       type="password"
       placeholder="Password"

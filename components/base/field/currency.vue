@@ -1,5 +1,5 @@
 <template>
-  <base-text-field
+  <base-field-text
     v-model="amountValue"
     type="text"
     :placeholder="placeholder"

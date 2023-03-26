@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <app-fs-sidebar v-if="isLogged" />
+    <app-sidebar v-if="isLogged" />
 
     <main>
       <h1>

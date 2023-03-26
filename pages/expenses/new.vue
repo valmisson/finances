@@ -6,7 +6,7 @@
   <base-breadcrumb :items="breadcrumbs" />
 
   <base-card class="new-expenses">
-    <expenses-form :loading="loading" @submit="submitNew" />
+    <page-expenses-form :loading="loading" @submit="submitNew" />
   </base-card>
 </template>
 

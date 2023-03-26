@@ -8,9 +8,9 @@
   />
 
   <base-card>
-    <investments-form-skeleton v-if="!investment" />
+    <page-investments-form-skeleton v-if="!investment" />
 
-    <investments-form
+    <page-investments-form
       v-else
       :investment="investment"
       :loading="loading"

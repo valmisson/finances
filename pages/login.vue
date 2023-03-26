@@ -4,7 +4,7 @@
       {{ appConfig.title }}
     </h1>
 
-    <app-fs-login />
+    <app-login />
   </main>
 </template>
 

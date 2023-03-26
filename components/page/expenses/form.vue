@@ -8,7 +8,7 @@
         Nome
       </label>
 
-      <base-text-field
+      <base-field-text
         id="name"
         v-model="expense.name"
         placeholder="Digite o nome"
@@ -21,7 +21,7 @@
         Data
       </label>
 
-      <base-text-field
+      <base-field-text
         v-model="expense.date"
         type="date"
         placeholder="dd/mm/aaaa"
@@ -34,7 +34,7 @@
         Valor
       </label>
 
-      <base-currency-field
+      <base-field-currency
         v-model="expense.value"
         placeholder="Digite o valor"
         required
