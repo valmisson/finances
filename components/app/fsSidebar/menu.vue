@@ -7,7 +7,15 @@
         class="menu-item"
         @click="$emit('changed:page')"
       >
-        <NuxtLink :to="menu.href" class="menu-link">
+        <NuxtLink
+          :to="menu.href"
+          :class="[
+            {
+              'router-child-active': matchPageChild(menu.href)
+            },
+            'menu-link'
+          ]"
+        >
           <Icon
             v-if="menu.icon"
             :name="menu.icon"
@@ -24,11 +32,28 @@
 </template>
 
 <script setup lang="ts">
+defineEmits(['changed:page'])
+
+const route = useRoute()
+
 const menuList = computed(() => {
   return pageMap.sort((a, b) => a.order - b.order)
 })
 
-defineEmits(['changed:page'])
+function matchPageChild (href: string): boolean {
+  if (href === '/') {
+    return false
+  }
+
+  const routePath = route.path.split(/\//)
+
+  // check if route has child
+  if (routePath.length < 3) {
+    return false
+  }
+
+  return routePath.includes(href.substring(1))
+}
 </script>
 
 <style scoped>
@@ -46,7 +71,8 @@ defineEmits(['changed:page'])
       duration-300 hover:bg-primary hover:text-white;
   }
 
-  .router-link-exact-active {
+  .router-link-active,
+  .router-child-active {
     @apply bg-primary text-white;
   }
 
