@@ -1,11 +1,8 @@
 <template>
-  <base-subtitle>
-    Editar Despesa
-  </base-subtitle>
-
-  <base-breadcrumb :items="breadcrumbs" />
-
-  <base-card class="edit-expense">
+  <page-views
+    title="Editar Despesa"
+    :breadcrumbs="breadcrumbs"
+  >
     <page-expenses-form-skeleton v-if="!expense" />
 
     <page-expenses-form
@@ -14,7 +11,7 @@
       :loading="loading"
       @submit="editExpense"
     />
-  </base-card>
+  </page-views>
 </template>
 
 <script setup lang="ts">
@@ -36,10 +33,6 @@ const breadcrumbs = ref<Breadcrumb[]>([
   { text: 'Despesas', href: expensesPageLink.value },
   { text: 'Editar Despesa' }
 ])
-
-useHead({
-  title: 'Editar Despesa'
-})
 
 onMounted(async () => {
   if (expenseId.value) {

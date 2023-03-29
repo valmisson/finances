@@ -1,95 +1,93 @@
 <template>
-  <base-subtitle>
-    Overview
-  </base-subtitle>
+  <page-views title="Overview" flat>
+    <base-card class="balance">
+      <base-card-title>
+        Saldo
+      </base-card-title>
 
-  <base-card class="balance">
-    <base-card-title>
-      Saldo
-    </base-card-title>
-
-    <base-card-text class="balance-box">
-      <div v-if="!balanceDisplay" class="balance-hide">
-        &nbsp;
-      </div>
-
-      <h4 v-if="balanceDisplay" class="balance-value">
-        {{ balanceFormat }}
-      </h4>
-
-      <button class="balance-display" @click="toggleBalanceDisplay">
-        <Icon class="balance-display-icon" :name="balanceHideIcon" />
-      </button>
-    </base-card-text>
-  </base-card>
-
-  <base-card class="transactions">
-    <base-card-title>
-      Transações Recentes
-    </base-card-title>
-
-    <base-table
-      :headers="transactionsHeaders"
-      :items="transactions"
-      no-items="Nenhuma transação cadastrada"
-    >
-      <template #value="{ value, item }">
-        <div
-          :class="item.type.value.withdrawal ? 'text-red-500': 'text-green-500'"
-        >
-          {{ value }}
+      <base-card-text class="balance-box">
+        <div v-if="!balanceDisplay" class="balance-hide">
+          &nbsp;
         </div>
-      </template>
 
-      <template #type="{ value }">
-        {{ value.name }}
-      </template>
-    </base-table>
+        <h4 v-if="balanceDisplay" class="balance-value">
+          {{ balanceFormat }}
+        </h4>
 
-    <base-card-actions v-if="transactions.length">
-      <NuxtLink :to="getPageLink('transactions')" class="see-all">
-        ver todos
-      </NuxtLink>
-    </base-card-actions>
-  </base-card>
+        <button class="balance-display" @click="toggleBalanceDisplay">
+          <Icon class="balance-display-icon" :name="balanceHideIcon" />
+        </button>
+      </base-card-text>
+    </base-card>
 
-  <div class="row">
-    <base-card class="expenses">
+    <base-card class="transactions">
       <base-card-title>
-        Próximas Despesas
+        Transações Recentes
       </base-card-title>
 
       <base-table
-        :headers="simplesHeaders"
-        :items="expenses"
-        no-items="Nenhuma despesas cadastradas"
-      />
+        :headers="transactionsHeaders"
+        :items="transactions"
+        no-items="Nenhuma transação cadastrada"
+      >
+        <template #value="{ value, item }">
+          <div
+            :class="item.type.value.withdrawal ? 'text-red-500': 'text-green-500'"
+          >
+            {{ value }}
+          </div>
+        </template>
 
-      <base-card-actions v-if="expenses.length">
-        <NuxtLink :to="getPageLink('expenses')" class="see-all">
+        <template #type="{ value }">
+          {{ value.name }}
+        </template>
+      </base-table>
+
+      <base-card-actions v-if="transactions.length">
+        <NuxtLink :to="getPageLink('transactions')" class="see-all">
           ver todos
         </NuxtLink>
       </base-card-actions>
     </base-card>
 
-    <base-card class="investments">
-      <base-card-title>
-        Próximos Investimentos
-      </base-card-title>
+    <div class="row">
+      <base-card class="expenses">
+        <base-card-title>
+          Próximas Despesas
+        </base-card-title>
 
-      <base-table
-        :headers="simplesHeaders"
-        :items="investments"
-        no-items="Nenhum investimento cadastrado"
-      />
+        <base-table
+          :headers="simplesHeaders"
+          :items="expenses"
+          no-items="Nenhuma despesas cadastradas"
+        />
 
-      <base-card-actions v-if="investments.length">
-        <NuxtLink :to="getPageLink('investments')" class="see-all">
-          ver todos
-        </NuxtLink>
-      </base-card-actions>
-    </base-card>
-  </div>
+        <base-card-actions v-if="expenses.length">
+          <NuxtLink :to="getPageLink('expenses')" class="see-all">
+            ver todos
+          </NuxtLink>
+        </base-card-actions>
+      </base-card>
+
+      <base-card class="investments">
+        <base-card-title>
+          Próximos Investimentos
+        </base-card-title>
+
+        <base-table
+          :headers="simplesHeaders"
+          :items="investments"
+          no-items="Nenhum investimento cadastrado"
+        />
+
+        <base-card-actions v-if="investments.length">
+          <NuxtLink :to="getPageLink('investments')" class="see-all">
+            ver todos
+          </NuxtLink>
+        </base-card-actions>
+      </base-card>
+    </div>
+  </page-views>
 </template>
 
 <script setup lang="ts">
@@ -184,7 +182,7 @@ async function getInvestments () {
   }
 
   .see-all {
-    @apply text-gray-400 text-xs uppercase py-1 mt-4 hover:text-primary;
+    @apply text-gray-400 text-xs uppercase py-1 hover:text-primary;
   }
 
   /* Balance */

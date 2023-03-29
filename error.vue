@@ -37,7 +37,7 @@ const props = defineProps({
 const backPageHome = () => clearError({ redirect: '/' })
 
 useHead({
-  title: `${props.error?.statusCode} - ${props.error?.message} | ${appConfig.title}`
+  title: `${props.error?.statusCode} - ${props.error?.message} - ${appConfig.title}`
 })
 </script>
 

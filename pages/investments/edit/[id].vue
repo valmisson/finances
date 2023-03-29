@@ -1,13 +1,8 @@
 <template>
-  <base-subtitle>
-    Editar Investimento
-  </base-subtitle>
-
-  <base-breadcrumb
-    :items="breadcrumbs"
-  />
-
-  <base-card>
+  <page-views
+    title="Editar Investimento"
+    :breadcrumbs="breadcrumbs"
+  >
     <page-investments-form-skeleton v-if="!investment" />
 
     <page-investments-form
@@ -16,7 +11,7 @@
       :loading="loading"
       @submit="editInvestment"
     />
-  </base-card>
+  </page-views>
 </template>
 
 <script setup lang="ts">
@@ -39,10 +34,6 @@ const breadcrumbs = ref<Breadcrumb[]>([
   { text: 'Investimentos', href: investmentsPageLink.value },
   { text: 'Editar investimento' }
 ])
-
-useHead({
-  title: 'Editar Investimento'
-})
 
 onMounted(async () => {
   await getInvestment(investmentId.value as string)

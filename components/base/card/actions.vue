@@ -6,6 +6,6 @@
 
 <style scoped>
   .card-actions {
-    @apply flex justify-end w-full;
+    @apply flex justify-end w-full mt-2;
   }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="table-wrapper">
+  <section class="table-wrapper">
     <table>
       <thead>
         <tr>
@@ -40,7 +40,7 @@
         >
           <td
             v-for="(item, index) in tableTtemsWithoutId(itemTable)"
-            :key="Math.random(index)"
+            :key="index"
           >
             <slot :name="item.name" :value="item.value" :item="itemTable">
               {{ item.value }}
@@ -68,7 +68,7 @@
     >
       {{ noItems }}
     </base-table-empty>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -167,6 +167,10 @@ function sortBy (value: string): void {
 
   tbody tr {
     @apply border-b border-separate last:border-none;
+  }
+
+  tbody tr:last-child td {
+    @apply pb-6 lg:pb-4;
   }
 
   td {

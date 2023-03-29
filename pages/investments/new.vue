@@ -1,13 +1,10 @@
 <template>
-  <base-subtitle>
-    Novo investimento
-  </base-subtitle>
-
-  <base-breadcrumb :items="breadcrumbs" />
-
-  <base-card class="new-investments">
+  <page-views
+    title="Novo investimento"
+    :breadcrumbs="breadcrumbs"
+  >
     <page-investments-form :loading="loading" @submit="submitNew" />
-  </base-card>
+  </page-views>
 </template>
 
 <script setup lang="ts">
@@ -25,10 +22,6 @@ const breadcrumbs = ref<Breadcrumb[]>([
   { text: 'Investimentos', href: investmentsPageLink.value },
   { text: 'Novo investimento' }
 ])
-
-useHead({
-  title: 'Novo investimento'
-})
 
 async function submitNew (content: Investment): Promise<void> {
   try {

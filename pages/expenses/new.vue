@@ -1,16 +1,15 @@
 <template>
-  <base-subtitle>
-    Nova Despesa
-  </base-subtitle>
-
-  <base-breadcrumb :items="breadcrumbs" />
-
-  <base-card class="new-expenses">
+  <page-views
+    title="Nova Despesa"
+    :breadcrumbs="breadcrumbs"
+  >
     <page-expenses-form :loading="loading" @submit="submitNew" />
-  </base-card>
+  </page-views>
 </template>
 
 <script setup lang="ts">
+import { PageExpensesForm } from '#components'
+
 import { Breadcrumb } from '~/types/components/breadcrumb'
 import { Expense } from '~/types/interface/expense'
 
@@ -24,10 +23,6 @@ const breadcrumbs = ref<Breadcrumb[]>([
   { text: 'Despesas', href: expensesPageLink.value },
   { text: 'Nova Despesa' }
 ])
-
-useHead({
-  title: 'Nova Despesa'
-})
 
 async function submitNew (content: Expense) {
   try {
@@ -45,9 +40,3 @@ async function submitNew (content: Expense) {
   }
 }
 </script>
-
-<style scoped>
-  .new-expenses {
-    @apply mb-8;
-  }
-</style>
