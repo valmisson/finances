@@ -1,6 +1,6 @@
 <template>
   <page-views
-    title="Editar Investimento"
+    :title="$t('editInvestment')"
     :breadcrumbs="breadcrumbs"
   >
     <page-investments-form-skeleton v-if="!investment" />
@@ -23,6 +23,8 @@ const DB_COLLECTION = 'investments'
 const route = useRoute()
 const db = useDatabase()
 
+const { t } = useI18n()
+
 const investment = ref<Investment>()
 const loading = ref<boolean>(false)
 const errors = ref<string>()
@@ -31,8 +33,8 @@ const investmentId = computed(() => route.params.id)
 const investmentsPageLink = computed(() => getPageLink('investments'))
 
 const breadcrumbs = ref<Breadcrumb[]>([
-  { text: 'Investimentos', href: investmentsPageLink.value },
-  { text: 'Editar investimento' }
+  { text: t('investment', 2), href: investmentsPageLink.value },
+  { text: t('editInvestment') }
 ])
 
 onMounted(async () => {
@@ -49,7 +51,7 @@ async function getInvestment (investmentId: string) {
   if (!result.data) {
     showError({
       statusCode: 404,
-      statusMessage: `Investment not found: ${investmentId}`
+      statusMessage: t('investmentNotFound', { id: investmentId })
     })
   }
 }

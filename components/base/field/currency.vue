@@ -23,6 +23,8 @@ const emit = defineEmits([
   'update:modelValue'
 ])
 
+const { locale } = useI18n()
+
 const amountValue = ref<string>()
 const amountNumber = ref<number>()
 
@@ -32,7 +34,7 @@ onMounted(async () => {
   if (props.modelValue) {
     const value = parseFloat(props.modelValue as string)
 
-    amountValue.value = toFractionNumber(value)
+    amountValue.value = toFractionNumber(value, locale.value)
     amountNumber.value = value
   }
 })
@@ -43,7 +45,7 @@ function updateAmount (): void {
   }
 
   const amount = parseFloat(amountValue.value)
-  const formated = toFractionNumber(amount)
+  const formated = toFractionNumber(amount, locale.value)
 
   amountNumber.value = amount
   amountValue.value = formated

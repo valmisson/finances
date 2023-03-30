@@ -2,7 +2,7 @@
   <button class="logout" @click="auth.logout">
     <Icon class="logout-icon" name="mdi:logout" />
 
-    Logout
+    {{ $t('logout') }}
   </button>
 </template>
 

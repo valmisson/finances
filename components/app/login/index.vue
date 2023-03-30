@@ -1,13 +1,13 @@
 <template>
   <form class="form" @submit.prevent="submitLogin">
     <h2 class="title">
-      Login
+      {{ $t('login') }}
     </h2>
 
     <base-field-text
       v-model="email"
       type="email"
-      placeholder="E-mail"
+      :placeholder="$t('email')"
       icon="mdi:email"
       required
     />
@@ -15,7 +15,7 @@
     <base-field-text
       v-model="password"
       type="password"
-      placeholder="Password"
+      :placeholder="$t('password')"
       icon="mdi:password"
       required
     />
@@ -24,11 +24,11 @@
 
     <div class="actions">
       <a href="#" class="forgot-password">
-        Esqueceu a senha ?
+        {{ $t('forgotPassword') }}
       </a>
 
       <base-button>
-        Entrar
+        {{ $t('signIn') }}
       </base-button>
     </div>
   </form>

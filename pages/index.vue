@@ -1,8 +1,8 @@
 <template>
-  <page-views title="Overview" flat>
+  <page-views :title="$t('overview')" flat>
     <base-card class="balance">
       <base-card-title>
-        Saldo
+        {{ $t('balance') }}
       </base-card-title>
 
       <base-card-text class="balance-box">
@@ -22,13 +22,13 @@
 
     <base-card class="transactions">
       <base-card-title>
-        Transações Recentes
+        {{ $t('recentTransactions') }}
       </base-card-title>
 
       <base-table
         :headers="transactionsHeaders"
         :items="transactions"
-        no-items="Nenhuma transação cadastrada"
+        :no-items="$t('msgEmptyTransaction')"
       >
         <template #value="{ value, item }">
           <div
@@ -45,7 +45,7 @@
 
       <base-card-actions v-if="transactions.length">
         <NuxtLink :to="getPageLink('transactions')" class="see-all">
-          ver todos
+          {{ $t('seeAll') }}
         </NuxtLink>
       </base-card-actions>
     </base-card>
@@ -53,36 +53,36 @@
     <div class="row">
       <base-card class="expenses">
         <base-card-title>
-          Próximas Despesas
+          {{ $t('nextExpenses') }}
         </base-card-title>
 
         <base-table
           :headers="simplesHeaders"
           :items="expenses"
-          no-items="Nenhuma despesas cadastradas"
+          :no-items="$t('msgEmptyExpense')"
         />
 
         <base-card-actions v-if="expenses.length">
           <NuxtLink :to="getPageLink('expenses')" class="see-all">
-            ver todos
+            {{ $t('seeAll') }}
           </NuxtLink>
         </base-card-actions>
       </base-card>
 
       <base-card class="investments">
         <base-card-title>
-          Próximos Investimentos
+          {{ $t('nextInvestments') }}
         </base-card-title>
 
         <base-table
           :headers="simplesHeaders"
           :items="investments"
-          no-items="Nenhum investimento cadastrado"
+          :no-items="$t('msgEmptyInvestment')"
         />
 
         <base-card-actions v-if="investments.length">
           <NuxtLink :to="getPageLink('investments')" class="see-all">
-            ver todos
+            {{ $t('seeAll') }}
           </NuxtLink>
         </base-card-actions>
       </base-card>
@@ -98,6 +98,8 @@ import { TableHeader } from '~/types/components/tables'
 
 const db = useDatabase()
 
+const { locale, t } = useI18n()
+
 const balanceValue = ref<number>(5101)
 const balanceDisplay = ref<boolean>(false)
 
@@ -106,22 +108,19 @@ const expenses = ref<Expense[]>([])
 const investments = ref<Investment[]>([])
 
 const transactionsHeaders = ref<TableHeader[]>([
-  { text: 'Nome', value: 'name' },
-  { text: 'Data', value: 'date' },
-  { text: 'Valor', value: 'value' },
-  { text: 'Tipo', value: 'type' }
+  { text: t('name'), value: 'name' },
+  { text: t('date'), value: 'date' },
+  { text: t('value'), value: 'value' },
+  { text: t('type'), value: 'type' }
 ])
 
 const simplesHeaders = ref<TableHeader[]>([
-  { text: 'Nome', value: 'name' },
-  { text: 'Data', value: 'date' }
+  { text: t('name'), value: 'name' },
+  { text: t('date'), value: 'date' }
 ])
 
 const balanceFormat = computed(() => {
-  return Intl.NumberFormat(
-    'pt-br',
-    { style: 'currency', currency: 'BRL' }
-  ).format(balanceValue.value)
+  return toCurrencyFormated(balanceValue.value, locale.value, t('iso4217Code'))
 })
 
 const balanceHideIcon = computed(() => {
@@ -159,7 +158,7 @@ async function getExpenses () {
   const result = await db.getAll('expenses', 3)
 
   expenses.value = result.data.map((item) => {
-    item.date = toDateFormated(item.date)
+    item.date = toDateFormated(item.date, locale.value)
 
     return item
   }) as Expense[]
@@ -169,7 +168,7 @@ async function getInvestments () {
   const result = await db.getAll('investments', 3)
 
   investments.value = result.data.map((item) => {
-    item.date = toDateFormated(item.date)
+    item.date = toDateFormated(item.date, locale.value)
 
     return item
   }) as Investment[]

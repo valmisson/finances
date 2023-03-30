@@ -183,6 +183,10 @@ function sortBy (value: string): void {
     leading-6;
   }
 
+  .actions {
+    @apply !uppercase;
+  }
+
   .sortable {
     @apply flex items-center cursor-pointer
       hover:text-gray-800;

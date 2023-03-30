@@ -1,3 +1,5 @@
+import i18n from './config/i18n'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: true,
@@ -9,6 +11,7 @@ export default defineNuxtConfig({
   },
   modules: [
     'nuxt-icon',
+    '@nuxtjs/i18n',
     ['@pinia/nuxt', {
       autoImports: ['defineStore']
     }]
@@ -24,5 +27,6 @@ export default defineNuxtConfig({
   },
   vite: {
     logLevel: 'warn'
-  }
+  },
+  i18n
 })

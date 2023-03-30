@@ -11,21 +11,24 @@ export const pageMap = [
   {
     order: 2,
     name: 'expenses',
-    title: 'despesas',
+    title: 'expense',
+    titlePlural: true,
     href: '/expenses',
     icon: 'mdi:currency-usd-off'
   },
   {
     order: 3,
     name: 'investments',
-    title: 'investimentos',
+    title: 'investment',
+    titlePlural: true,
     href: '/investments',
     icon: 'mdi:currency-usd'
   },
   {
     order: 4,
     name: 'transactions',
-    title: 'transações',
+    title: 'transaction',
+    titlePlural: true,
     href: '/transactions',
     icon: 'mdi:compare-horizontal'
   }

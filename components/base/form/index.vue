@@ -4,7 +4,7 @@
 
     <div class="actions">
       <base-button :loading="loading">
-        Enviar
+        {{ $t('send') }}
       </base-button>
     </div>
   </form>

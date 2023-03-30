@@ -10,7 +10,7 @@
       v-bind="{ ...$props, ...$attrs }"
       :value="modelValue"
       :class="{ '!pl-9': icon }"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('update:modelValue', $event?.target?.value)"
     >
   </div>
 </template>

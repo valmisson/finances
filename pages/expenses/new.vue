@@ -1,6 +1,6 @@
 <template>
   <page-views
-    title="Nova Despesa"
+    :title="$t('newExpense')"
     :breadcrumbs="breadcrumbs"
   >
     <page-expenses-form :loading="loading" @submit="submitNew" />
@@ -15,13 +15,15 @@ import { Expense } from '~/types/interface/expense'
 
 const db = useDatabase()
 
+const { t } = useI18n()
+
 const expensesPageLink = ref(getPageLink('expenses'))
 const loading = ref<boolean>(false)
 const errors = ref<string>('')
 
 const breadcrumbs = ref<Breadcrumb[]>([
-  { text: 'Despesas', href: expensesPageLink.value },
-  { text: 'Nova Despesa' }
+  { text: t('expense', 2), href: expensesPageLink.value },
+  { text: t('newExpense') }
 ])
 
 async function submitNew (content: Expense) {

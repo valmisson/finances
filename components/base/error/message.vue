@@ -5,12 +5,9 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  errors: {
-    type: String,
-    default: ''
-  }
-})
+defineProps<{
+  errors: string;
+}>()
 </script>
 
 <style scoped>

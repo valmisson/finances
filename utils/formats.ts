@@ -1,4 +1,7 @@
-export function toDateFormated (datetime: number, locale = 'pt-BR'): string {
+export function toDateFormated (
+  datetime: number,
+  locale: string
+): string {
   if (typeof datetime === 'string') {
     datetime = Number(datetime)
   }
@@ -23,8 +26,8 @@ export function toTimestamp (date: string): number {
 
 export function toCurrencyFormated (
   value: number,
-  locale = 'pt-BR',
-  iso4217Code = 'BRL'
+  locale: string,
+  iso4217Code: string
 ): string {
   const formated = new Intl.NumberFormat(locale, {
     style: 'currency',
@@ -37,10 +40,10 @@ export function toCurrencyFormated (
 
 export function toFractionNumber (
   value: number,
-  fraction = 2,
-  locale = 'pt-BR'
+  locale: string,
+  fraction?: number
 ) {
   return new Intl.NumberFormat(locale, {
-    minimumFractionDigits: fraction
+    minimumFractionDigits: fraction ?? 2
   }).format(value)
 }

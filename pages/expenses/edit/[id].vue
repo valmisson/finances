@@ -1,6 +1,6 @@
 <template>
   <page-views
-    title="Editar Despesa"
+    :title="$t('editExpense')"
     :breadcrumbs="breadcrumbs"
   >
     <page-expenses-form-skeleton v-if="!expense" />
@@ -21,6 +21,8 @@ import { Expense } from '~/types/interface/expense'
 const route = useRoute()
 const db = useDatabase()
 
+const { t } = useI18n()
+
 const expense = ref<Expense>()
 
 const loading = ref<boolean>(false)
@@ -30,8 +32,8 @@ const expenseId = computed(() => route.params.id as string)
 const expensesPageLink = ref(getPageLink('expenses'))
 
 const breadcrumbs = ref<Breadcrumb[]>([
-  { text: 'Despesas', href: expensesPageLink.value },
-  { text: 'Editar Despesa' }
+  { text: t('expense', 2), href: expensesPageLink.value },
+  { text: t('editExpense') }
 ])
 
 onMounted(async () => {
@@ -50,7 +52,7 @@ async function getExpense (expenseId: string): Promise<void> {
   if (!result.data) {
     showError({
       statusCode: 404,
-      statusMessage: `Expense not found: ${expenseId}`
+      statusMessage: t('expenseNotFound', { id: expenseId })
     })
   }
 }

@@ -1,12 +1,12 @@
 <template>
   <page-views-list
-    page-title="Despesas"
+    :page-title="$t('expense', 2)"
     page-route-name="expenses"
-    btn-title="Nova Despesa"
+    :btn-title="$t('newExpense')"
     :table-headers="headers"
     :table-items="expenses"
-    table-empty="Nenhuma despesa cadastrada"
-    modal-title="Excluir despesa ?"
+    :table-empty="$t('msgEmptyExpense')"
+    :modal-title="$t('msgDeleteExpense')"
     @delete-item="deleteExpense"
   />
 </template>
@@ -19,10 +19,12 @@ const DB_COLLECTION = 'expenses'
 
 const db = useDatabase()
 
+const { t } = useI18n()
+
 const headers = ref<TableHeader[]>([
-  { text: 'Nome', value: 'name' },
-  { text: 'Data', value: 'date', sortable: true },
-  { text: 'Valor', value: 'value' }
+  { text: t('name'), value: 'name' },
+  { text: t('date'), value: 'date', sortable: true },
+  { text: t('value'), value: 'value' }
 ])
 
 const expenses = ref<Expense[]>([])

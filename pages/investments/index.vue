@@ -1,12 +1,12 @@
 <template>
   <page-views-list
-    page-title="Investimentos"
+    :page-title="$t('investment', 2)"
     page-route-name="investments"
-    btn-title="Novo investimento"
+    :btn-title="$t('newInvestment')"
     :table-headers="headers"
     :table-items="investments"
-    table-empty="Nenhum investimento cadastrado"
-    modal-title="Excluir investimento ?"
+    :table-empty="$t('msgEmptyInvestment')"
+    :modal-title="$t('msgDeleteInvestment')"
     @delete-item="deleteInvestment"
   />
 </template>
@@ -19,10 +19,12 @@ const DB_COLLECTION = 'investments'
 
 const db = useDatabase()
 
+const { t } = useI18n()
+
 const headers = ref<TableHeader[]>([
-  { text: 'Nome', value: 'name' },
-  { text: 'Data', value: 'date', sortable: true },
-  { text: 'Valor', value: 'value' }
+  { text: t('name'), value: 'name' },
+  { text: t('date'), value: 'date', sortable: true },
+  { text: t('value'), value: 'value' }
 ])
 
 const investments = ref<Investment[]>([])

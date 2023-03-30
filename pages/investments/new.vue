@@ -1,6 +1,6 @@
 <template>
   <page-views
-    title="Novo investimento"
+    :title="$t('newInvestment')"
     :breadcrumbs="breadcrumbs"
   >
     <page-investments-form :loading="loading" @submit="submitNew" />
@@ -13,14 +13,16 @@ import { Investment } from '~/types/interface/investment'
 
 const db = useDatabase()
 
+const { t } = useI18n()
+
 const loading = ref<boolean>(false)
 const errors = ref<string>()
 
 const investmentsPageLink = computed(() => getPageLink('investments'))
 
 const breadcrumbs = ref<Breadcrumb[]>([
-  { text: 'Investimentos', href: investmentsPageLink.value },
-  { text: 'Novo investimento' }
+  { text: t('investment', 2), href: investmentsPageLink.value },
+  { text: t('newInvestment') }
 ])
 
 async function submitNew (content: Investment): Promise<void> {

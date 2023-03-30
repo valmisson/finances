@@ -23,7 +23,7 @@
           />
 
           <p class="menu-text">
-            {{ menu.title }}
+            {{ $t(menu.title, titlePlural(menu.titlePlural)) }}
           </p>
         </NuxtLink>
       </li>
@@ -32,6 +32,8 @@
 </template>
 
 <script setup lang="ts">
+import { pageMap } from '#imports'
+
 defineEmits(['changed:page'])
 
 const route = useRoute()
@@ -39,6 +41,10 @@ const route = useRoute()
 const menuList = computed(() => {
   return pageMap.sort((a, b) => a.order - b.order)
 })
+
+function titlePlural (plural: boolean | undefined): number {
+  return plural ? 2 : 1
+}
 
 function matchPageChild (href: string): boolean {
   if (href === '/') {

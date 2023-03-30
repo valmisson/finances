@@ -5,20 +5,20 @@
   >
     <fieldset>
       <label for="name">
-        Nome
+        {{ $t('name') }}
       </label>
 
       <base-field-text
         id="name"
         v-model="investment.name"
-        placeholder="Digite o nome"
+        :placeholder="$t('enterName')"
         required
       />
     </fieldset>
 
     <fieldset>
       <label for="date">
-        Data
+        {{ $t('date') }}
       </label>
 
       <base-field-text
@@ -32,12 +32,12 @@
 
     <fieldset>
       <label for="value">
-        Valor
+        {{ $t('value') }}
       </label>
 
       <base-field-currency
         v-model="investment.value"
-        placeholder="Digite o valor"
+        :placeholder="$t('enterValue')"
         required
       />
     </fieldset>

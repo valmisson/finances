@@ -14,20 +14,20 @@
       class="page-table"
     >
       <template #date="{ value }">
-        {{ toDateFormated(value) }}
+        {{ toDateFormated(value, $i18n.locale) }}
       </template>
 
       <template #value="{ value }">
-        {{ toCurrencyFormated(value) }}
+        {{ toCurrencyFormated(value, $i18n.locale, $t('iso4217Code')) }}
       </template>
 
       <template #actions="{ itemId }">
         <NuxtLink :to="`${pageLink}/edit/${itemId}`">
-          EDITAR
+          {{ $t('edit') }}
         </NuxtLink>
 
         <button class="item-remove" @click="removeItem(itemId)">
-          REMOVE
+          {{ $t('remove') }}
         </button>
       </template>
     </base-table>
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { TableHeader, TableItem } from '~~/types/components/tables'
+import { TableHeader, TableItem } from '~/types/components/tables'
 
 const props = defineProps<{
   pageTitle: string;
@@ -89,6 +89,6 @@ function confirmDeleteItem (confirmed: boolean) {
   }
 
   .item-remove {
-    @apply text-red-500;
+    @apply text-red-500 uppercase;
   }
 </style>

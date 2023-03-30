@@ -11,7 +11,7 @@
             color="bg-red-500 text-white hover:bg-red-600"
             @click="$emit('modal:confirm', true)"
           >
-            Confirmar
+            {{ $t('confirm') }}
           </base-button>
 
           <base-button
@@ -21,7 +21,7 @@
             "
             @click="$emit('modal:confirm', false)"
           >
-            Cancelar
+            {{ $t('cancel') }}
           </base-button>
         </div>
       </article>
