@@ -1,6 +1,6 @@
 <template>
   <section class="table-wrapper">
-    <table>
+    <table v-if="tableItems.length">
       <thead>
         <tr>
           <th
@@ -33,7 +33,7 @@
         </tr>
       </thead>
 
-      <tbody v-if="tableItems.length">
+      <tbody>
         <tr
           v-for="itemTable in tableItems"
           :key="itemTable._id"
