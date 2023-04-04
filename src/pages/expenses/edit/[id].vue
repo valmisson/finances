@@ -32,7 +32,7 @@ const expenseId = computed(() => route.params.id as string)
 const expensesPageLink = ref(getPageLink('expenses'))
 
 const breadcrumbs = ref<Breadcrumb[]>([
-  { text: t('expense', 2), href: expensesPageLink.value },
+  { text: t('expenses'), href: expensesPageLink.value },
   { text: t('editExpense') }
 ])
 

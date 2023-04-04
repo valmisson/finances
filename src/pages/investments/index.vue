@@ -1,6 +1,6 @@
 <template>
   <page-views-list
-    :page-title="$t('investment', 2)"
+    :page-title="$t('investments')"
     page-route-name="investments"
     :btn-title="$t('newInvestment')"
     :table-headers="headers"

@@ -1,3 +1,5 @@
+import { NuxtConfig } from 'nuxt/schema'
+
 export default {
   defualtLocale: 'pt-BR',
   locales: [
@@ -17,4 +19,4 @@ export default {
   experimental: {
     jsTsFormatResource: true
   }
-}
+} as NuxtConfig['i18n']

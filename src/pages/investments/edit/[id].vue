@@ -33,7 +33,7 @@ const investmentId = computed(() => route.params.id)
 const investmentsPageLink = computed(() => getPageLink('investments'))
 
 const breadcrumbs = ref<Breadcrumb[]>([
-  { text: t('investment', 2), href: investmentsPageLink.value },
+  { text: t('investments'), href: investmentsPageLink.value },
   { text: t('editInvestment') }
 ])
 

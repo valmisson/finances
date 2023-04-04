@@ -22,7 +22,7 @@ const loading = ref<boolean>(false)
 const errors = ref<string>('')
 
 const breadcrumbs = ref<Breadcrumb[]>([
-  { text: t('expense', 2), href: expensesPageLink.value },
+  { text: t('expenses'), href: expensesPageLink.value },
   { text: t('newExpense') }
 ])
 

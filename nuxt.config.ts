@@ -28,5 +28,6 @@ export default defineNuxtConfig({
   vite: {
     logLevel: 'warn'
   },
+  srcDir: 'src/',
   i18n
 })
