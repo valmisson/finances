@@ -1,6 +1,12 @@
 <template>
   <section class="table-wrapper">
-    <table v-if="tableItems.length">
+    <base-table-skeleton
+      v-if="dataLoader.pending && !tableItems.length"
+      :cols="props.headers.length"
+      :actions="!!slots.actions"
+    />
+
+    <table v-if="!dataLoader.pending">
       <thead>
         <tr>
           <th
@@ -33,7 +39,7 @@
         </tr>
       </thead>
 
-      <tbody>
+      <tbody v-if="tableItems.length">
         <tr
           v-for="itemTable in tableItems"
           :key="itemTable._id"
@@ -56,12 +62,6 @@
         </tr>
       </tbody>
     </table>
-
-    <base-table-skeleton
-      v-if="dataLoader.pending && !tableItems.length"
-      :cols="props.headers.length"
-      :actions="!!slots.actions"
-    />
 
     <base-table-empty
       v-if="!dataLoader.pending && !tableItems.length"

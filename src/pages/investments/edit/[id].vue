@@ -3,13 +3,16 @@
     :title="$t('editInvestment')"
     :breadcrumbs="breadcrumbs"
   >
-    <page-investments-form-skeleton v-if="!investment" />
+    <base-form-skeleton
+      v-if="!investment"
+      :fields-number="3"
+    />
 
     <page-investments-form
       v-else
       :investment="investment"
       :loading="loading"
-      @submit="editInvestment"
+      @submit="submitEdit"
     />
   </page-views>
 </template>
@@ -56,7 +59,7 @@ async function getInvestment (investmentId: string) {
   }
 }
 
-async function editInvestment (content: Investment) {
+async function submitEdit (content: Investment) {
   try {
     loading.value = true
 

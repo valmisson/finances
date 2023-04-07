@@ -1,16 +1,18 @@
 <template>
-  <section class="form-skeleton">
-    <div
-      v-for="item in 3"
-      :key="item"
-      class="form-field"
-    >
-      <div class="form-label-skeleton">
-        <span>form label skeleton</span>
-      </div>
+  <div class="form-skeleton">
+    <div :class="`form-fields-skeleton form-cols-${fieldsNumber}`">
+      <div
+        v-for="field in fieldsNumber"
+        :key="field"
+        class="form-field-skeleton"
+      >
+        <div class="form-label-skeleton">
+          <span>form label skeleton</span>
+        </div>
 
-      <div class="form-input-skeleton">
-        <span>form input skeleton</span>
+        <div class="form-input-skeleton">
+          <span>form input skeleton</span>
+        </div>
       </div>
     </div>
 
@@ -19,13 +21,30 @@
         <span>form button skeleton</span>
       </div>
     </div>
-  </section>
+  </div>
 </template>
+
+<script setup lang="ts">
+defineProps<{
+  fieldsNumber: number
+}>()
+</script>
 
 <style scoped>
   .form-skeleton {
-    @apply grid grid-cols-1 lg:grid-cols-3
-      max-lg:gap-y-3 gap-x-4 lg:gap-x-8 py-2;
+    @apply py-2;
+  }
+
+  .form-fields-skeleton {
+    @apply grid grid-cols-1 max-lg:gap-y-3 gap-x-4 lg:gap-x-8 ;
+  }
+
+  .form-cols-3 {
+    @apply lg:grid-cols-3;
+  }
+
+  .form-cols-4 {
+    @apply lg:grid-cols-4;
   }
 
   .form-label-skeleton,
@@ -48,7 +67,7 @@
   }
 
   .form-actions-skeleton {
-    @apply col-span-1 lg:col-span-3 flex justify-end mt-7
+    @apply flex justify-end mt-7
   }
 
   .form-btn-skeleton {

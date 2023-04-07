@@ -1,12 +1,13 @@
 export interface TransactionType {
   name: string;
+  value: string;
   withdrawal: boolean;
 }
 
 export interface Transaction {
-  id: string;
+  id?: string;
   name: string;
   date: string;
-  value: string;
+  value: number;
   type: TransactionType;
 }

@@ -17,8 +17,16 @@
         {{ toDateFormated(value, $i18n.locale) }}
       </template>
 
-      <template #value="{ value }">
-        {{ toCurrencyFormated(value, $i18n.locale, $t('iso4217Code')) }}
+      <template #value="{ value, item }">
+        <div :class="valueClassColor(item)">
+          {{ toCurrencyFormated(value, $i18n.locale, $t('iso4217Code')) }}
+        </div>
+      </template>
+
+      <template #type="{ value }">
+        <div>
+          {{ $t(value.value) }}
+        </div>
       </template>
 
       <template #actions="{ itemId }">
@@ -76,6 +84,14 @@ function confirmDeleteItem (confirmed: boolean) {
 
   showModalConfirm.value = false
   itemIdBeingDelete.value = ''
+}
+
+function valueClassColor (item: TableItem) {
+  if (item?.type) {
+    return item.type.value.withdrawal ? 'text-red-500' : 'text-green-500'
+  }
+
+  return null
 }
 </script>
 

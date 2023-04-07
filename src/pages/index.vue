@@ -34,12 +34,12 @@
           <div
             :class="item.type.value.withdrawal ? 'text-red-500': 'text-green-500'"
           >
-            {{ value }}
+            {{ toCurrencyFormated(value, $i18n.locale, t('iso4217Code')) }}
           </div>
         </template>
 
         <template #type="{ value }">
-          {{ value.name }}
+          {{ $t(value.value) }}
         </template>
       </base-table>
 
@@ -134,18 +134,7 @@ onMounted(async () => {
 
   await getInvestments()
 
-  transactions.value = [
-    {
-      id: 'er3r',
-      name: 'Serviço Fix Bugs',
-      date: '27/01/2023',
-      value: '+R$ 1.200,00',
-      type: {
-        name: 'Deposito',
-        withdrawal: false
-      }
-    }
-  ]
+  await getTransactions()
 })
 
 function toggleBalanceDisplay () {
@@ -172,6 +161,16 @@ async function getInvestments () {
 
     return item
   }) as Investment[]
+}
+
+async function getTransactions () {
+  const result = await db.getAll('transactions', 3)
+
+  transactions.value = result.data.map((item) => {
+    item.date = toDateFormated(item.date, locale.value)
+
+    return item
+  }) as Transaction[]
 }
 </script>
 

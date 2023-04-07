@@ -3,13 +3,16 @@
     :title="$t('editExpense')"
     :breadcrumbs="breadcrumbs"
   >
-    <page-expenses-form-skeleton v-if="!expense" />
+    <base-form-skeleton
+      v-if="!expense"
+      :fields-number="3"
+    />
 
     <page-expenses-form
       v-else
       :expense="expense"
       :loading="loading"
-      @submit="editExpense"
+      @submit="submitEdit"
     />
   </page-views>
 </template>
@@ -57,7 +60,7 @@ async function getExpense (expenseId: string): Promise<void> {
   }
 }
 
-async function editExpense (content: Expense): Promise<void> {
+async function submitEdit (content: Expense): Promise<void> {
   try {
     loading.value = true
 
