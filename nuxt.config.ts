@@ -10,8 +10,9 @@ export default defineNuxtConfig({
     }
   },
   modules: [
-    'nuxt-icon',
+    '@nuxt/icon',
     '@nuxtjs/i18n',
+    '@nuxt/eslint',
     ['@pinia/nuxt', {
       autoImports: ['defineStore']
     }]
@@ -29,5 +30,6 @@ export default defineNuxtConfig({
     logLevel: 'warn'
   },
   srcDir: 'src/',
-  i18n
+  i18n,
+  compatibilityDate: '2025-02-27'
 })

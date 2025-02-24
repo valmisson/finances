@@ -8,32 +8,31 @@
     "preview": "nuxt preview",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint --ignore-path .gitignore **/*.{js,ts,vue}",
+    "lint": "eslint .",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "firebase": "^9.18.0"
+    "firebase": "^11.3.1"
   },
   "devDependencies": {
-    "@nuxt/test-utils": "^3.3.1",
-    "@nuxtjs/eslint-config": "^12.0.0",
-    "@nuxtjs/eslint-config-typescript": "^12.0.0",
-    "@nuxtjs/i18n": "^8.0.0-beta.10",
-    "@pinia/nuxt": "^0.4.7",
-    "@vue/test-utils": "^2.3.1",
-    "eslint": "^8.36.0",
-    "eslint-plugin-nuxt": "^4.0.0",
-    "lint-staged": "^13.2.0",
-    "nuxt": "^3.3.1",
-    "nuxt-icon": "^0.3.3",
-    "tailwindcss": "^3.2.7",
-    "typescript": "^5.0.2",
-    "vitest": "^0.29.3",
+    "@nuxt/eslint": "1.1.0",
+    "@nuxt/icon": "^1.10.3",
+    "@nuxt/test-utils": "^3.17.0",
+    "@nuxtjs/i18n": "^9.2.1",
+    "@pinia/nuxt": "^0.10.1",
+    "@vue/test-utils": "^2.4.6",
+    "eslint": "^9.0.0",
+    "lint-staged": "^15.4.3",
+    "nuxt": "^3.15.4",
+    "pinia": "^3.0.1",
+    "tailwindcss": "3.4.17",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.6",
     "yorkie": "^2.0.0"
   },
   "lint-staged": {
     "**/*.{js,ts,vue}": [
-      "eslint --fix --ignore-path .gitignore"
+      "eslint . --fix"
     ],
     "tests/**/*.{spec,test}.{js,ts}": [
       "vitest --run"
@@ -43,7 +42,8 @@
     "pre-commit": "lint-staged"
   },
   "engines": {
-    "node": ">=16.19.0",
+    "node": ">=22.14.0",
     "yarn": "^1.22.19"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

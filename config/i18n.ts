@@ -1,4 +1,4 @@
-import { NuxtConfig } from 'nuxt/schema'
+import type { NuxtConfig } from 'nuxt/schema'
 
 export default {
   defualtLocale: 'pt-BR',
@@ -16,6 +16,7 @@ export default {
   lazy: true,
   langDir: 'lang',
   strategy: 'no_prefix',
+  restructureDir: false,
   experimental: {
     jsTsFormatResource: true
   }
