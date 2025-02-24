@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { Breadcrumb } from '~/types/components/breadcrumb'
+import type { Breadcrumb } from '~/types/components/breadcrumb'
 
 const props = defineProps<{
  title: string;

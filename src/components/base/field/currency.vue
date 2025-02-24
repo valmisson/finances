@@ -12,10 +12,10 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  value?: string,
-  placeholder: string,
-  required: boolean,
-  modelValue?: string | number
+  value?: string;
+  placeholder: string;
+  required: boolean;
+  modelValue?: string | number;
 }>()
 
 const emit = defineEmits([
@@ -51,12 +51,12 @@ function updateAmount (): void {
   amountValue.value = formated
 }
 
-function inputAmount (event: any): void {
-  const amount = event.target.value
+function inputAmount (event: Event): void {
+  const amount = (event.target as HTMLInputElement).value
   const amountNumberOnly = amount?.replace(/[^\d.]/g, '')
 
   amountValue.value = amountNumberOnly
-  amountNumber.value = amountNumberOnly
+  amountNumber.value = Number(amountNumberOnly)
 
   emit('update:amount', amountNumber.value)
   emit('update:modelValue', amountNumberOnly)

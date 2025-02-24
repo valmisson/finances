@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { Breadcrumb } from '~/types/components/breadcrumb'
-import { Expense } from '~/types/interface/expense'
+import type { Breadcrumb } from '~/types/components/breadcrumb'
+import type { Expense } from '~/types/interface/expense'
 
 const route = useRoute()
 const db = useDatabase()

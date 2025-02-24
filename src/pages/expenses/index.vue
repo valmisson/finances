@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import { Expense } from '~/types/interface/expense'
-import { TableHeader } from '~/types/components/tables'
+import type { Expense } from '~/types/interface/expense'
+import type { TableHeader } from '~/types/components/tables'
 
 const DB_COLLECTION = 'expenses'
 

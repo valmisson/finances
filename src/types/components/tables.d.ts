@@ -4,6 +4,7 @@ export interface TableHeader {
   sortable?: boolean;
 }
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface TableItem {
   [key: string]: any;
 }

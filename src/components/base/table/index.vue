@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { TableHeader, TableItem } from '~/types/components/tables'
+import type { TableHeader, TableItem } from '~/types/components/tables'
 
 const slots = useSlots()
 
@@ -136,9 +136,13 @@ function sortBy (value: string): void {
 
   sorted.value++
 
-  sorted.value === 1
-    ? tableItems.value.sort(asc)
-    : sorted.value === 2 ? tableItems.value.sort(desc) : reset()
+  if (sorted.value === 1) {
+    tableItems.value.sort(asc)
+  } else if (sorted.value === 2) {
+    tableItems.value.sort(desc)
+  } else {
+    reset()
+  }
 }
 </script>
 

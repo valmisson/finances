@@ -23,6 +23,8 @@
 </template>
 
 <script setup lang="ts">
+import type { NuxtError } from '#app'
+
 const appConfig = useAppConfig()
 const nuxtConfig = useRuntimeConfig()
 const auth = useAuth()
@@ -30,9 +32,9 @@ const auth = useAuth()
 const isLogged = computed(() => auth.isLogged())
 const isDev = computed(() => nuxtConfig.public.isDev)
 
-const props = defineProps({
-  error: Object
-})
+const props = defineProps<{
+  error: NuxtError
+}>()
 
 const backPageHome = () => clearError({ redirect: '/' })
 

@@ -10,7 +10,7 @@
 
       <base-field-text
         id="name"
-        v-model="investment.name"
+        v-model="formData.name"
         :placeholder="$t('enterName')"
         required
       />
@@ -23,7 +23,7 @@
 
       <base-field-text
         id="date"
-        v-model="investment.date"
+        v-model="formData.date"
         type="date"
         placeholder="dd/mm/yyy"
         required
@@ -36,7 +36,7 @@
       </label>
 
       <base-field-currency
-        v-model="investment.value"
+        v-model="formData.value"
         :placeholder="$t('enterValue')"
         required
       />
@@ -45,27 +45,27 @@
 </template>
 
 <script setup lang="ts">
-import { Investment } from '~/types/interface/investment'
+import type { Investment } from '~/types/interface/investment'
+
+defineEmits(['submit'])
 
 const props = defineProps<{
   investment?: Investment
   loading: boolean
 }>()
 
-defineEmits(['submit'])
-
-const investment = reactive<Investment>({
+const formData = reactive<Investment>({
   name: '',
   date: '',
   value: 0
 })
 
 const newInvestmentData = computed<Investment>(() => {
-  const { name, date, value } = investment
+  const { name, date, value } = formData
 
   const investmentData: Investment = {
     name,
-    date: toTimestamp(date) as any,
+    date: String(toTimestamp(date)),
     value
   }
 
@@ -76,9 +76,9 @@ onMounted(() => {
   if (props.investment) {
     const { name, date, value } = props.investment
 
-    investment.name = name
-    investment.date = toInputDate(date)
-    investment.value = value
+    formData.name = name
+    formData.date = toInputDate(date)
+    formData.value = value
   }
 })
 </script>

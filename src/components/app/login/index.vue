@@ -43,7 +43,7 @@ const errors = ref<string>('')
 
 async function submitLogin (): Promise<void> {
   try {
-    if (!email || !password) {
+    if (!email.value || !password.value) {
       throw new Error('required fields')
     }
 

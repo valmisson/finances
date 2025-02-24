@@ -7,29 +7,33 @@
     />
 
     <input
-      v-bind="{ ...$props, ...$attrs }"
-      :value="modelValue"
+      v-bind="{ ...props, ...$attrs }"
+      v-model="model"
+      :value="model"
       :class="{ '!pl-9': icon }"
-      @input="$emit('update:modelValue', $event?.target?.value)"
     >
   </div>
 </template>
 
 <script setup lang="ts">
-defineEmits(['update:modelValue'])
+const props = withDefaults(
+  defineProps<{
+    type?: string;
+    placeholder: string;
+    required: boolean;
+    icon?: string;
+    min?: string;
+    max?: string;
+  }>(),
+  {
+    type: 'text',
+    icon: undefined,
+    min: undefined,
+    max: undefined
+  }
+)
 
-defineProps({
-  type: {
-    type: String,
-    default: 'text'
-  },
-  placeholder: String,
-  required: Boolean,
-  icon: String,
-  min: String,
-  max: String,
-  modelValue: [String, Number]
-})
+const model = defineModel<string | number | undefined>()
 </script>
 
 <style scoped>

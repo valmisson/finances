@@ -12,7 +12,7 @@
 
       <base-field-text
         id="name"
-        v-model="transaction.name"
+        v-model="formData.name"
         :placeholder="$t('enterName')"
         required
       />
@@ -25,7 +25,7 @@
 
       <base-field-text
         id="date"
-        v-model="transaction.date"
+        v-model="formData.date"
         type="date"
         placeholder="dd/mm/yyy"
         required
@@ -38,7 +38,7 @@
       </label>
 
       <base-field-currency
-        v-model="transaction.value"
+        v-model="formData.value"
         :placeholder="$t('enterValue')"
         required
       />
@@ -50,7 +50,7 @@
       </label>
 
       <base-field-select
-        v-model="transaction.type"
+        v-model="formData.type"
         :items="transactionItems"
         :placeholder="$t('selectType')"
         required
@@ -60,22 +60,22 @@
 </template>
 
 <script setup lang="ts">
-import { Transaction, TransactionType } from '~/types/interface/transaction'
+import type { Transaction, TransactionType } from '~/types/interface/transaction'
+
+defineEmits(['submit'])
+
+const { t } = useI18n()
 
 const props = defineProps<{
   transaction?: Transaction
   loading: boolean
 }>()
 
-defineEmits(['submit'])
-
-const { t } = useI18n()
-
-const transaction = reactive<Omit<Transaction, 'type'> & { type: string }>({
+const formData = reactive<Omit<Transaction, 'type'> & { type: string }>({
   name: '',
   date: '',
-  value: 0,
-  type: ''
+  type: '',
+  value: 0
 })
 
 const transactionItems = ref<TransactionType[]>([
@@ -86,11 +86,11 @@ const transactionItems = ref<TransactionType[]>([
 ])
 
 const newTransactionData = computed<Transaction>(() => {
-  const { name, date, value, type } = transaction
+  const { name, date, value, type } = formData
 
   const transactionData: Transaction = {
     name,
-    date: toTimestamp(date) as any,
+    date: String(toTimestamp(date)),
     value,
     type: transactionItems.value
       .map(({ value, withdrawal }) => ({ value, withdrawal }))
@@ -104,10 +104,10 @@ onMounted(() => {
   if (props.transaction) {
     const { name, date, value, type } = props.transaction
 
-    transaction.name = name
-    transaction.date = toInputDate(date)
-    transaction.value = value
-    transaction.type = type.value
+    formData.name = name
+    formData.date = toInputDate(date)
+    formData.value = value
+    formData.type = type.value
   }
 })
 </script>

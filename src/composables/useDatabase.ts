@@ -7,7 +7,8 @@ import {
   getDocs,
   limit,
   query,
-  updateDoc
+  updateDoc,
+  type DocumentData,
 } from 'firebase/firestore'
 
 import { toTimestamp } from '~/utils/formats'
@@ -17,7 +18,7 @@ export default function () {
   const dataLoader = useDataLoader()
 
   const database = {
-    async add (col: string, document: any) {
+    async add (col: string, document: DocumentData) {
       try {
         const ref = collection($firestore, col)
 
@@ -26,12 +27,12 @@ export default function () {
         const doc = await addDoc(ref, document)
 
         return { success: true, data: { id: doc?.id } }
-      } catch (error) {
+      } catch {
         throw createError({ statusCode: 400, message: 'failed to add document' })
       }
     },
 
-    async update (col: string, id: string, document: any) {
+    async update (col: string, id: string, document: DocumentData) {
       try {
         const ref = doc($firestore, col, id)
 
@@ -42,7 +43,7 @@ export default function () {
         await updateDoc(ref, document)
 
         return { success: true, data: { updateAt } }
-      } catch (error) {
+      } catch {
         throw createError({ statusCode: 400, message: 'failed to update document' })
       }
     },
@@ -62,7 +63,7 @@ export default function () {
         }
 
         return { success: false, data: null }
-      } catch (error) {
+      } catch {
         throw createError({ statusCode: 400, message: 'failed to get document' })
       } finally {
         dataLoader.endLoading()
@@ -88,7 +89,7 @@ export default function () {
         })
 
         return { success: true, data }
-      } catch (error) {
+      } catch {
         throw createError({ statusCode: 400, message: 'failed to get all documents' })
       } finally {
         dataLoader.endLoading()
@@ -102,7 +103,7 @@ export default function () {
         await deleteDoc(ref)
 
         return { success: true, data: null }
-      } catch (error) {
+      } catch {
         throw createError({ statusCode: 400, message: 'failed to delete document' })
       }
     }

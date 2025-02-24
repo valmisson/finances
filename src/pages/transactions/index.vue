@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import { TableHeader } from '~/types/components/tables'
-import { Transaction } from '~/types/interface/transaction'
+import type { TableHeader } from '~/types/components/tables'
+import type { Transaction } from '~/types/interface/transaction'
 
 const DB_COLLECTION = 'transactions'
 

@@ -1,4 +1,4 @@
-import { PageMap } from '~/types/interface/pageMap'
+import type { PageMap } from '~/types/interface/pageMap'
 
 export const pageMap = [
   {

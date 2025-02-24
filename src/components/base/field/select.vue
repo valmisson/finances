@@ -1,19 +1,19 @@
 <template>
   <div class="fs-input">
     <select
-      v-model="selectedItem"
+      v-model="model"
       :required="required"
-      @input="$emit('update:modelValue', $event?.target?.value)"
     >
       <option
-        :value="null"
+        value=""
         selected
+        disabled
       >
-        {{ placeholder }}
+        {{ props.placeholder }}
       </option>
 
       <option
-        v-for="item in items"
+        v-for="item in props.items"
         :key="item.value"
         :value="item.value"
       >
@@ -24,18 +24,15 @@
 </template>
 
 <script setup lang="ts">
-import { SelectItems } from '~/types/components/select'
-
-defineEmits(['update:modelValue'])
+import type { SelectItems } from '~/types/components/select'
 
 const props = defineProps<{
-  items: SelectItems[]
-  placeholder: string
-  required: boolean
-  modelValue?: any
+  items: SelectItems[];
+  placeholder: string;
+  required: boolean;
 }>()
 
-const selectedItem = computed(() => props.modelValue)
+const model = defineModel<string>()
 </script>
 
 <style scoped>

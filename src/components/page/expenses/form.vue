@@ -10,7 +10,7 @@
 
       <base-field-text
         id="name"
-        v-model="expense.name"
+        v-model="formData.name"
         :placeholder="$t('enterName')"
         required
       />
@@ -22,7 +22,7 @@
       </label>
 
       <base-field-text
-        v-model="expense.date"
+        v-model="formData.date"
         type="date"
         placeholder="dd/mm/aaaa"
         required
@@ -35,7 +35,7 @@
       </label>
 
       <base-field-currency
-        v-model="expense.value"
+        v-model="formData.value"
         :placeholder="$t('enterValue')"
         required
       />
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { Expense } from '~/types/interface/expense'
+import type { Expense } from '~/types/interface/expense'
 
 defineEmits(['submit'])
 
@@ -53,18 +53,18 @@ const props = defineProps<{
   loading: boolean
 }>()
 
-const expense = reactive<Expense>({
+const formData = reactive<Expense>({
   name: '',
   date: '',
   value: 0
 })
 
 const newExpenseData = computed(() => {
-  const { name, date, value } = expense
+  const { name, date, value } = formData
 
   const expenseData: Expense = {
     name,
-    date: toTimestamp(date) as any,
+    date: String(toTimestamp(date)),
     value
   }
 
@@ -75,9 +75,9 @@ onMounted(() => {
   if (props.expense) {
     const { name, date, value } = props.expense
 
-    expense.name = name
-    expense.date = toInputDate(date)
-    expense.value = value
+    formData.name = name
+    formData.date = toInputDate(date)
+    formData.value = value
   }
 })
 </script>

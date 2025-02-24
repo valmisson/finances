@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import { TableHeader } from '~/types/components/tables'
-import { Investment } from '~/types/interface/investment'
+import type { TableHeader } from '~/types/components/tables'
+import type { Investment } from '~/types/interface/investment'
 
 const DB_COLLECTION = 'investments'
 

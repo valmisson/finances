@@ -91,10 +91,10 @@
 </template>
 
 <script setup lang="ts">
-import { Transaction } from '~/types/interface/transaction'
-import { Expense } from '~/types/interface/expense'
-import { Investment } from '~/types/interface/investment'
-import { TableHeader } from '~/types/components/tables'
+import type { Transaction } from '~/types/interface/transaction'
+import type { Expense } from '~/types/interface/expense'
+import type { Investment } from '~/types/interface/investment'
+import type { TableHeader } from '~/types/components/tables'
 
 const db = useDatabase()
 

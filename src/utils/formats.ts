@@ -17,7 +17,7 @@ export function toDateFormated (
 }
 
 export function toInputDate (datetime: string): string {
-  return new Date(datetime).toISOString().substring(0, 10)
+  return new Date(+datetime).toISOString().substring(0, 10)
 }
 
 export function toTimestamp (date: string): number {

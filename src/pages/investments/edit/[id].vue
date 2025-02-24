@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { Breadcrumb } from '~/types/components/breadcrumb'
-import { Investment } from '~/types/interface/investment'
+import type { Breadcrumb } from '~/types/components/breadcrumb'
+import type { Investment } from '~/types/interface/investment'
 
 const DB_COLLECTION = 'investments'
 
